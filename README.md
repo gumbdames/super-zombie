@@ -1,3 +1,8 @@
+[לשחק https://tinyurl.com/super-zombie2](https://tinyurl.com/super-zombie2)
+[Play https://tinyurl.com/super-zombie2](https://tinyurl.com/super-zombie2)
+
+
+
 # סופר זומבי / Super Zombie
 
 ## 🇮🇱 עברית
