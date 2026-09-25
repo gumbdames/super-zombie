@@ -1,7 +1,7 @@
-// SIG:6RcLCKyhY15sQxhPuCm4TdsbPDylOlUyIcjSuVF1fI6LwAYDYvIAawn8W/mGlM7AwZSOP81lTIPowzzWzyY3YA==
+// SIG:OF6Kbu7aoCJLUU/lm4PirIxstGuAoFRqJ7UXsXcF32Ok0mrseRdVIsVhUavTxY1326anDT3kLr3Inv8h6ejx5g==
 /* ============================================================================
    Super Zombie — Sukkot special (a local signed patch for סופר זומבי)
-   Version 1.0
+   Version 1.0.1
    Copyright (C) 2026 Gumb Dames
 
    This program is free software: you can redistribute it and/or modify
@@ -681,7 +681,7 @@
    <https://www.gnu.org/licenses/>.
    ============================================================================ */
 /* ================================================================
-   SUKKOT SPECIAL for Super Zombie (סופר זומבי) — v1
+   SUKKOT SPECIAL for Super Zombie (סופר זומבי) — v1.0.1
    ----------------------------------------------------------------
    This file is loaded by the game ONLY if it carries a valid
    signature (see sign-patch.js). It runs nothing unless the date
@@ -690,8 +690,10 @@
    The game: defend the sukkah in the middle of the Yavne
    schoolyard. Zombies stream in from the edges of the world and
    march on the sukkah — keep it standing (and stay alive!) as
-   long as you can. Permanent daytime. Difficulty ramps up until
-   it is overwhelming. Your score is your survival time; the best
+   long as you can. Permanent daytime. The start is calm and the
+   pressure builds slowly; only un-repented zombies count toward
+   the spawn cap, so the waves never stop — the game can in theory
+   go on forever. Your score is your survival time; the best
    5 scores are kept while the page stays open.
    ================================================================ */
 (function () {
@@ -700,7 +702,7 @@
 /* ---- 0. Date gate: this special only loads before 2026-10-04 ---- */
 if (Date.now() >= Date.UTC(2026, 9, 4, 0, 0, 0)) return; // Oct 4 2026 00:00 UTC
 
-var SUKKOT_PATCH_VERSION = '1.0';
+var SUKKOT_PATCH_VERSION = '1.0.1';
 window.SUKKOT_PATCH_VERSION = SUKKOT_PATCH_VERSION;
 
 var SZ = window.SZ20;
@@ -726,17 +728,22 @@ btn.onclick = function () { SZ.audioInit(); SZ.SFX.click(); startSukkot(); };
 /* ---- 2. Session state ---- */
 var sukkotOn = false, hooked = false;
 var SUK = null;              // active session (null when not playing)
+var sukkotScores = [];       // best-5 survival times: page lifetime, survives quit-to-title
 var sukkahGroup = null;      // the sukkah meshes
 var fsGroup = null, fsT = 0; // the waved Four Species + its timer
 var timerEl = null;
+// Endless-mode tuning (v1.0.1): the start stays calm, pressure builds slowly,
+// and only ACTIVE zombies count toward the spawn cap so waves never stop.
+var SUKKOT_SPAWN_CAP = 45;   // max simultaneous un-repented zombies (base game: CFG.spawnCap = 14)
+var SUKKOT_FIRST_WAVE = 5;   // seconds until the first wave (was 3)
+var SUKKOT_BASE_INTERVAL = 9; // spawn interval at t=0 (was 7)
 
 function active() { return sukkotOn && SUK && !SUK.over; }
 
 function startSukkot() {
   SZ.showScreen(null);
   SZ.startLevel(5, false); // the Yavne level
-  var prevScores = (SUK && SUK.scores) ? SUK.scores : [];
-  SUK = { t: 0, spawnT: 3, over: false, endReason: null, scores: prevScores,
+  SUK = { t: 0, spawnT: SUKKOT_FIRST_WAVE, over: false, endReason: null,
           sukkahHp: 120, sukkahMax: 120, sx: 0, sz: 0 };
   installHooks();
   sukkotOn = true;
@@ -919,7 +926,12 @@ function placePlayerNearSukkah() {
   }
 }
 
-/* ---- 5. Zombie AI: march on the sukkah (fart/song redirects to the kid) ---- */
+/* ---- 5. Zombie AI: march on the sukkah (fart/song redirects to the kid) ----
+   Design note: the base game's rabbi "sit and learn" is deliberately NOT
+   applied here. In this endless mode the sukkah must stay threatened —
+   letting attackers sit out the fight around the rabbi would stall the
+   whole premise. Card earning near the rabbi still works (it is
+   distance-based in the base updateRabbi, which keeps running). */
 function sukkotUpdateZombies(dt) {
   if (!active()) return H._patchUpdateZombies(dt);
   var zombies = SZ.zombies(), player = SZ.player();
@@ -955,7 +967,9 @@ function sukkotUpdateZombies(dt) {
     var gz = dancing ? van.pos.z : (boosted ? player.pos.z : SUK.sz);
     var dx = gx - zb.pos.x, dz = gz - zb.pos.z;
     var gd = Math.hypot(dx, dz);
-    if (gd > 0.01) {
+    // hold position at the sukkah walls instead of marching into the mesh
+    var atSukkah = !dancing && !boosted && gd < 4.4;
+    if (gd > 0.01 && !atSukkah) {
       var want = Math.atan2(dx, dz);
       zb.yaw += kit.angDiff(want, zb.yaw) * Math.min(1, dt * 6);
       var sp = zb.speed; // full stride under the holiday sun
@@ -974,8 +988,10 @@ function sukkotUpdateZombies(dt) {
       if (od > 0.01 && od < 1.1) { zb.pos.x += (ox / od) * dt * 2; zb.pos.z += (oz / od) * dt * 2; }
     }
     var acted = false;
-    var sd = kit.dist2D(zb.pos.x, zb.pos.z, SUK.sx, SUK.sz); // smash the sukkah!
-    if (sd < 3.4 && zb.atkCd <= 0 && SUK.sukkahHp > 0) {
+    // smash the sukkah! stop at the walls (half-extent ~3.7) instead of
+    // walking into the mesh, then swing from just outside
+    var sd = kit.dist2D(zb.pos.x, zb.pos.z, SUK.sx, SUK.sz);
+    if (sd < 4.4 && zb.atkCd <= 0 && SUK.sukkahHp > 0) {
       zb.atkCd = 1.1;
       zb.rig.armL.rotation.x = -2.2; zb.rig.armR.rotation.x = -2.2;
       damageSukkah(zb.dmg, zb.pos.x, zb.pos.z);
@@ -1031,17 +1047,27 @@ function sukkotUpdateSpawner(dt) {
   SUK.spawnT -= dt;
   if (SUK.spawnT <= 0) {
     var t = SUK.t;
-    var batch = Math.min(8, 1 + Math.floor(t / 25)); // more zombies at once as time passes
-    SUK.spawnT = Math.max(2.5, 7 - t / 30);          // ...and more often (brutal by 3:00)
-    if (SZ.zombies().length < 70) spawnSukkotWave(batch);
-    else SUK.spawnT = 2;
+    // gentle ramp (v1.0.1): the start stays calm, pressure builds slowly —
+    // and it never fully stops (see the active-only cap below)
+    var batch = Math.min(6, 1 + Math.floor(t / 45)); // more zombies at once as time passes
+    SUK.spawnT = Math.max(3, SUKKOT_BASE_INTERVAL - t / 40); // ...and more often
+    // endless mode: only ACTIVE zombies count toward the cap, like the base
+    // game's CFG.spawnCap. Repented zombies stay praying where they are and
+    // never block new waves, so the game can in theory go on forever.
+    var alive = 0, horde = SZ.zombies();
+    for (var ai = 0; ai < horde.length; ai++) if (!horde[ai].repented && !horde[ai].gone) alive++;
+    if (alive < SUKKOT_SPAWN_CAP) spawnSukkotWave(batch);
+    else SUK.spawnT = 2; // at the cap: breathe, then try again soon
   }
 }
 
 /* ---- 7. Permanent daytime ---- */
 function sukkotUpdateDayNight(dt) {
   if (!active()) return H._patchUpdateDayNight(dt);
-  if (SZ.G.phaseT >= CFG.dayLength - 1) SZ.G.phaseT = 0; // the holiday day never ends
+  // freeze the sun at a pleasant mid-morning instead of resetting phaseT:
+  // the base function advances phaseT by dt, but we overwrite it every
+  // frame, so the sky never drifts and never teleports at the day's end
+  SZ.G.phaseT = CFG.dayLength * 0.35;
   H._patchUpdateDayNight(dt);
 }
 
@@ -1071,7 +1097,16 @@ function showFourSpecies(p) {
   fsGroup = g; fsT = 1.4;
 }
 function hideFourSpecies() {
-  if (fsGroup) { kit.scene().remove(fsGroup); fsGroup = null; }
+  if (fsGroup) {
+    kit.scene().remove(fsGroup);
+    // endless mode fires many blasts: release the per-blast geometries and
+    // materials instead of leaking GPU memory
+    fsGroup.traverse(function (o) {
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(function (m) { m.dispose(); });
+    });
+    fsGroup = null;
+  }
 }
 
 function fourSpeciesBlast() {
@@ -1079,6 +1114,7 @@ function fourSpeciesBlast() {
   if (!p || p.shofarCd > 0) return;
   p.shofarCd = CFG.shofarCd; // same cooldown
   SZ.SFX.shofar();
+  kit.shakeCamera(0.3); // same punch as the shofar blast
   showFourSpecies(p); // the kid takes out the Four Species and waves them
   p.rig.armL.rotation.x = -2.4; p.rig.armR.rotation.x = -2.4;
   var fx = Math.sin(p.yaw), fz = Math.cos(p.yaw); // same cone: damage + knockback
@@ -1101,7 +1137,11 @@ function fourSpeciesBlast() {
 function relabelFourSpecies() {
   if (!sukkotOn || !SUK) return;
   var el = document.querySelector('#ps_shofar .pn');
-  if (el) el.textContent = '🍋 ' + (isHe() ? 'ארבעת המינים' : 'Four Species');
+  // the base updatePowerBar rewrites this label whenever its cache key
+  // changes (each cooldown second, language switch, ...), so re-apply the
+  // Four Species name whenever the DOM doesn't already show it
+  var want = '🍋 ' + (isHe() ? 'ארבעת המינים' : 'Four Species');
+  if (el && el.textContent !== want) el.textContent = want;
 }
 
 /* ---- 9. Game over: score = survival time, top 5 kept while open ---- */
@@ -1113,16 +1153,16 @@ function fmtTime(t) {
 function sukkotGameOver() {
   if (!active()) return H._patchGameOver();
   SUK.over = true;
-  SUK.scores.push(SUK.t);
-  SUK.scores.sort(function (a, b) { return b - a; });
-  SUK.scores = SUK.scores.slice(0, 5);
+  sukkotScores.push(SUK.t);
+  sukkotScores.sort(function (a, b) { return b - a; });
+  sukkotScores = sukkotScores.slice(0, 5);
   H._patchGameOver();
   var fell = SUK.endReason === 'sukkah';
   document.getElementById('overTitle').textContent =
     fell ? (isHe() ? 'הסוכה נפלה! 💔' : 'The sukkah fell! 💔')
          : (isHe() ? 'המשחק נגמר!' : 'Game over!');
   var medals = ['🥇', '🥈', '🥉', '4.', '5.'];
-  var rows = SUK.scores.map(function (t, i) {
+  var rows = sukkotScores.map(function (t, i) {
     return '<div>' + medals[i] + ' ' + fmtTime(t) + '</div>';
   }).join('');
   document.getElementById('overSub').innerHTML =
@@ -1158,8 +1198,11 @@ function updateSukkahHud() {
   document.getElementById('bossfill').style.width =
     Math.max(0, SUK.sukkahHp / SUK.sukkahMax * 100) + '%';
 }
+var lastTimerText = '';
 function updateSukkotTimer() {
-  if (timerEl && SUK) timerEl.textContent = '⏱ ' + fmtTime(SUK.t);
+  if (!timerEl || !SUK) return;
+  var want = '⏱ ' + fmtTime(SUK.t);
+  if (want !== lastTimerText) { timerEl.textContent = want; lastTimerText = want; }
 }
 function hideSukkotHud() {
   document.getElementById('bossbar').style.display = 'none';

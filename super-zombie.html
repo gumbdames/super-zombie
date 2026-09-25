@@ -237,8 +237,8 @@
      once).
    - Powers (כוחות), not weapons:
        1. תפילה (Tfila)   — say "מודה אני לפניך" at what's ahead
-       2. כרטיס מצווה (Mitzvah card) — acts like a "shot"
-       3. שופר (Shofar)   — blast: damages + knocks back all ahead
+       2. שופר (Shofar)   — blast: damages + knocks back all ahead
+       3. כרטיס מצווה (Mitzvah card) — acts like a "shot"
        4. תפארת (Tiferet) — rarest: repents EVERY zombie in the level
           (the level-5 boss zombie is mighty — 5x a regular zombie's
           health — so a Tiferet only chips a regular zombie's worth of
@@ -246,8 +246,8 @@
           mitzvah cards, bring him down)
      - כוח הפלוץ (Fart power, boys) / כוח השירה (Singing power, girls):
        pick up beans/flowers to load one shot; spend it (X or the special
-       button) to lure a nearby bird so its poop lands on the kid for a
-       bonus תפארת card. Both powers attract nearby zombies, making them
+       button) to lure the nearest bird — at any distance — so its poop
+       lands on the kid for a bonus תפארת card. Both powers attract nearby zombies, making them
        hurry (x1.6 speed for 5s) -- the same risk for both kids, so the
        powers are balanced. Playful and tasteful: cartoon puff and a
        proper cartoon raspberry sound for boys; a sweet little tune
@@ -1509,7 +1509,7 @@ function updateCamera(dt) {
   if (camShakeT > 0) { camShakeT -= dt; sx = rand(-1, 1) * camShakeT * 2; sy = rand(-1, 1) * camShakeT * 2; }
   camera.lookAt(target.x + sx, ty + sy, target.z);
   if (inVan && van) { dirLight.position.set(van.pos.x + 40, 90, van.pos.z + 30); dirLight.target = van.mesh; }
-  else if (player) { dirLight.position.set(player.pos.x + 40, 90, player.pos.z + 30); }
+  else if (player) { dirLight.position.set(player.pos.x + 40, 90, player.pos.z + 30); dirLight.target = player.rig.group; }
 }
 /* --- player movement --- */
 function updatePlayer(dt) {
@@ -1733,6 +1733,12 @@ function toggleVan() {
 function updateVan(dt) {
   niggunCd = Math.max(0, niggunCd - dt);
   van.bumpCd = Math.max(0, van.bumpCd - dt);
+  // the kid's own power cooldowns keep ticking while driving (they can't be
+  // re-triggered from the van, but a cooldown started on foot must not freeze)
+  if (player) {
+    player.powerCd = Math.max(0, player.powerCd - dt);
+    player.shofarCd = Math.max(0, player.shofarCd - dt);
+  }
   var v = van;
   // --- driving ---
   var fw = (keys.KeyW || keys.ArrowUp ? 1 : 0) - (keys.KeyS || keys.ArrowDown ? 1 : 0);
@@ -1810,9 +1816,10 @@ function updateVan(dt) {
   }
 }
 function vanNiggun() {
-  // the van's "fire" button (F on desktop): the ONLY way to play the niggun.
-  // While it plays (CFG.niggunTime seconds), nearby zombies dance to the
-  // music and the niggun softens their health; then the speakers go silent.
+  // the van's action button (F on desktop, the power button on touch, or a
+  // mouse click): the way to play the niggun. While it plays
+  // (CFG.niggunTime seconds), nearby zombies dance to the music and the
+  // niggun softens their health; then the speakers go silent.
   if (niggunCd > 0 || niggunT > 0) return;
   niggunT = CFG.niggunTime; niggunCd = CFG.niggunCd;
   niggunStart();
@@ -2195,7 +2202,8 @@ function damageZombie(zb, dmg, fromYaw, quiet) {
 }
 // The van's song makes zombies dance: true while the roof speakers play and
 // the zombie is within earshot. Repented zombies hop in place; the rest hop
-// toward the van at their normal speed. Health and damage are untouched.
+// toward the van at their normal speed. (The niggun also softens nearby
+// zombies' health via the van's aura in updateVan — see there.)
 function vanMusicDancing(zb) {
   return NIGGUN.playing && van &&
     dist2D(zb.pos.x, zb.pos.z, van.pos.x, van.pos.z) < CFG.vanDanceRadius;
@@ -2504,7 +2512,7 @@ function addCards(n) {
 }
 
 /* ==================== 10b. FART & SING (v2.0.9) ====================
-   A playful risk/reward power, separate from the 4 combat powers.
+   A playful risk/reward power, separate from the 4 powers.
    Boys pick bean bushes, girls pick flower patches; walking over one
    loads a single fart/song (max 1 at a time). Pressing the special
    button (or X) spends the load:
@@ -3223,8 +3231,11 @@ function step(dt) {
   } else if (G.giant && G.giant.repented) {
     $('bossbar').style.display = 'none';
   }
-  // shofar cooldown display
-  if (player.power === 'shofar') HOOKS.updatePowerBar();
+  // power bar: refresh every frame so cooldowns (e.g. the shofar / Four
+  // Species countdown) keep ticking on their icons even while another power
+  // is active. updatePowerBar is keyed on its inputs and skips DOM writes
+  // when nothing changed, so the unconditional call is effectively free.
+  HOOKS.updatePowerBar();
 }
 var clock = null;
 function frame() {
@@ -3362,7 +3373,8 @@ window.SZ20 = {
     spawnBurst: spawnBurst, spawnBubble: spawnBubble, spawnNote: spawnNote,
     toast: toast, banner: banner,
     groundHeight: groundHeight, findFreePoint: findFreePoint, isBlocked: isBlocked,
-    clamp: clamp, lerp: lerp, rand: rand, randi: randi, dist2D: dist2D, angDiff: angDiff
+    clamp: clamp, lerp: lerp, rand: rand, randi: randi, dist2D: dist2D, angDiff: angDiff,
+    shakeCamera: function (t) { camShakeT = Math.max(camShakeT, t || 0.3); } // punch for blasts
   },
   niggunPlaying: function () { return NIGGUN.playing; },
   prayerTunePlaying: function () { return PRAYERTUNE.playing; },
