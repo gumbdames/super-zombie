@@ -1,9 +1,9 @@
-// SIG:G6yK/3j16/FOnwDQ4QleSMndtMyhSsfDmQHBybpgfnKdNK6XmIcB8AhJWmAyGh8exQHmKz0brAywZ/89CXYRvw==
+// SIG:tEVbLAmBwLnwbWJm5qJHuqmtRTrSSByvuVunHt4epvDjZGUUuAUi7CP7lpfmWb3S7kBPC/BnU0GwTgyrx21+Bw==
 (function () {
 'use strict';
 /* ============================================================================
    Super Zombie — "Word Cure" spelling patch
-   Version 1.0.1
+   Version 1.1.0
    Copyright (C) 2026 Gumb Dames
    SPDX-License-Identifier: AGPL-3.0-only
 
@@ -16,6 +16,12 @@
    Scaffold fading: the correct spelling is shown only in stage 1 ("See &
    Hear"); stages 2-4 hide it so the player recalls rather than copies
    (v1.0.1).
+   Two levels (v1.1.0): LEVEL 1 is the four-stage learning mode above.
+   Finishing it (3 stars on every word) unlocks LEVEL 2: WORD MASTER, the
+   final exam — zombies carry no letters (a "?" bubble) and each encounter
+   jumps straight to hear-and-spell. All words at 3 stars in the exam earns
+   the Word Master Diploma. Desktop parent shortcut: hold Shift on the title
+   screen and the button reads "📚 Word Cure 2"; clicking starts Level 2.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Affero General Public License as published by
@@ -26,7 +32,7 @@
    Mockable for tests: the loader suite overrides Date.now. */
 if (Date.now() >= Date.UTC(2026, 9, 17, 0, 0, 0)) return; // Oct 17 2026 00:00 UTC
 
-window.WORDCURE_PATCH_VERSION = '1.0.1'; // stamp (after the gate: expired => zero trace)
+window.WORDCURE_PATCH_VERSION = '1.1.0'; // stamp (after the gate: expired => zero trace)
 
 var SZ = window.SZ20;
 if (!SZ || !SZ.HOOKS || !SZ.kit || !SZ.spawnBird) return; // needs game v2.0.25+
@@ -111,11 +117,13 @@ function makeGapPlan(word, rnd) {
 
 /* Spaced-repetition queue: pick the least-attempted word with <3 stars that
    no live carrier is currently holding. Returns the index, or -1 when every
-   loaded word is mastered (or the list is empty). */
-function pickWordIndex(words, carried) {
+   loaded word is mastered (or the list is empty). sk selects the star field:
+   'stars' for Level 1, 'stars2' for the Level 2 exam. */
+function pickWordIndex(words, carried, sk) {
+  sk = (sk === 'stars2') ? 'stars2' : 'stars';
   var best = -1, bestAtt = Infinity, i;
   for (i = 0; i < words.length; i++) {
-    if (words[i].stars >= 3) continue;
+    if (words[i][sk] >= 3) continue;
     if (carried && carried.indexOf(words[i].w) !== -1) continue;
     if (words[i].attempts < bestAtt || (words[i].attempts === bestAtt && Math.random() < 0.5)) {
       best = i; bestAtt = words[i].attempts;
@@ -123,7 +131,7 @@ function pickWordIndex(words, carried) {
   }
   if (best === -1) { // everything unmastered is on screen: allow a duplicate
     for (i = 0; i < words.length; i++) {
-      if (words[i].stars >= 3) continue;
+      if (words[i][sk] >= 3) continue;
       if (words[i].attempts < bestAtt || (words[i].attempts === bestAtt && Math.random() < 0.5)) {
         best = i; bestAtt = words[i].attempts;
       }
@@ -161,7 +169,7 @@ function starStr(n) { var s = ''; for (var i = 0; i < 3; i++) s += i < n ? '★'
 Object.defineProperty(window, 'WORDCURE_TEST', {
   enumerable: false, configurable: true, writable: false,
   value: {
-    version: '1.0.1',
+    version: '1.1.0',
     parseWordList: parseWordList,
     scrambleLetters: scrambleLetters,
     awardStars: awardStars,
@@ -169,15 +177,19 @@ Object.defineProperty(window, 'WORDCURE_TEST', {
     makeGapPlan: makeGapPlan,
     pickWordIndex: pickWordIndex,
     builtinWords: BUILTIN_WORDS.slice(),
-    start: function (words) { startWordCure(words); },
+    start: function (words, level) { startWordCure(words, level); },
     stop: function () { exitWordCure(); },
     state: function () {
       return {
         on: wcOn,
-        words: WC ? WC.words.map(function (e) { return { w: e.w, stars: e.stars, attempts: e.attempts }; }) : null,
+        level: WC ? WC.level : null,
+        viewLevel: WC ? WC.viewLevel : null,
+        words: WC ? WC.words.map(function (e) { return { w: e.w, stars: e.stars, stars2: e.stars2, attempts: e.attempts }; }) : null,
         sessionStars: WC ? WC.sessionStars : 0,
         best: bestSessionStars,
-        curing: !!(WC && WC.curing)
+        curing: !!(WC && WC.curing),
+        curingWord: (WC && WC.curing) ? WC.curing.word : null, // the word actually being cured (exam: never shown in UI)
+        unlocked2: level2UnlockedNow()
       };
     }
   }
@@ -304,6 +316,12 @@ function shake(node) { replayAnim(node, 'wc-shake'); }   // gentle: wrong keystr
    6. Session state
    ========================================================================== */
 var wcOn = false, hooked = false, wasHe = false;
+/* Level 2 (final exam) unlock: the sorted word list that earned the Level 1
+   diploma this page visit. Loading the same list again keeps it unlocked;
+   a new list re-locks until it is mastered. The Shift+click parent shortcut
+   sets wantLevel2 and bypasses the lock (explicit adult gesture). */
+var level2UnlockKey = null, wantLevel2 = false;
+function levelListKey(words) { return words.slice().sort().join('|'); }
 var WC = null;              // active session (null when not playing)
 var bestSessionStars = 0;   // best star total, page lifetime (like Sukkot's best-five)
 var wcSavedDisplay = null;  // original display values of UI hidden in-mode
@@ -323,7 +341,27 @@ btn.textContent = '📚 Word Cure';
 btn.style.marginTop = '10px';
 startBtn.parentNode.insertBefore(btn, startBtn.nextSibling); // directly under Start
 var origRetry = document.getElementById('btnRetry').onclick; // saved for quit-to-title restore
-btn.onclick = function () { SZ.audioInit(); SZ.SFX.click(); openLoadPanel(); };
+/* Level 2 parent shortcut (desktop only): while Shift is held, the button
+   reads "📚 Word Cure 2" and clicking it starts the Level 2 exam directly
+   (bypassing the mastery unlock - it is an explicit adult gesture). Gated on
+   a fine pointer so touch screens never see it. The label is cosmetic; the
+   click handler reads event.shiftKey, so a missed keyup can never strand the
+   game in the wrong level. */
+var finePointer = !!(window.matchMedia && window.matchMedia('(pointer: fine)').matches);
+var shiftHeld = false;
+function paintWcBtn() {
+  btn.textContent = (finePointer && shiftHeld) ? '📚 Word Cure 2' : '📚 Word Cure';
+}
+if (finePointer) {
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'Shift' && !shiftHeld) { shiftHeld = true; paintWcBtn(); }
+  });
+  window.addEventListener('keyup', function (e) {
+    if (e.key === 'Shift') { shiftHeld = false; paintWcBtn(); }
+  });
+  window.addEventListener('blur', function () { shiftHeld = false; paintWcBtn(); });
+}
+btn.onclick = function (e) { SZ.audioInit(); SZ.SFX.click(); openLoadPanel(!!(e && e.shiftKey)); };
 
 var overlayEl = null, overlayCard = null, overlayHead = null, overlayBody = null;
 function buildOverlay() {
@@ -346,7 +384,8 @@ function showMsg(msg, ok, t) {
   msg.textContent = t;
 }
 
-function openLoadPanel() {
+function openLoadPanel(shift2) {
+  wantLevel2 = !!shift2; // Shift+click on the title button: preselect the exam
   buildOverlay();
   overlayHead.appendChild(el('div', 'wc-title', '📚 Word Cure'));
   overlayBody.appendChild(el('p', 'wc-help',
@@ -383,18 +422,41 @@ function beginWith(words, msg) {
   var n = words.length;
   showMsg(msg, true, n + ' word' + (n === 1 ? '' : 's') + ' loaded — ready, Doctor?');
   var row = overlayBody.querySelector('.wc-btnrow');
-  if (row && !overlayBody.querySelector('.wc-start')) {
-    var start = el('button', 'wc-btn primary wc-start', '🩺 Start curing!');
-    start.onclick = function () { SZ.audioInit(); SZ.SFX.click(); removeOverlay(); startWordCure(words); };
-    row.appendChild(start);
+  if (!row || overlayBody.querySelector('.wc-start')) return;
+  var unlocked = (levelListKey(words) === level2UnlockKey);
+  var lvl = wantLevel2 ? 2 : 1;
+  var start = null;
+  function paintLvl() {
+    b1.className = 'wc-btn' + (lvl === 1 ? ' primary' : '');
+    b2.className = 'wc-btn' + (lvl === 2 ? ' primary' : '');
+    if (start) start.textContent = lvl === 2 ? '🎧 Start the exam!' : '🩺 Start curing!';
   }
+  var b1 = el('button', 'wc-btn' + (lvl === 1 ? ' primary' : ''), '🩺 Level 1 — Learn');
+  var b2 = el('button', 'wc-btn' + (lvl === 2 ? ' primary' : ''),
+    (unlocked || wantLevel2) ? '🎧 Level 2 — Final exam' : '🔒 Level 2 — finish Level 1 first');
+  b1.onclick = function () { SZ.SFX.click(); lvl = 1; paintLvl(); };
+  b2.onclick = function () {
+    SZ.SFX.click();
+    if (unlocked || wantLevel2) { lvl = 2; paintLvl(); }
+    else showMsg(msg, false, 'Cure every word with ★★★ in Level 1 to unlock the final exam!');
+  };
+  var pickRow = el('div', 'wc-btnrow');
+  pickRow.appendChild(b1); pickRow.appendChild(b2);
+  overlayBody.insertBefore(pickRow, row);
+  start = el('button', 'wc-btn primary wc-start', lvl === 2 ? '🎧 Start the exam!' : '🩺 Start curing!');
+  start.onclick = function () { SZ.audioInit(); SZ.SFX.click(); removeOverlay(); startWordCure(words, lvl); };
+  row.appendChild(start);
 }
 
 /* ==========================================================================
-   8. Mode lifecycle: start / stop / quit-to-title / retry
+   8. Mode lifecycle: start / stop / quit-to-title / retry.
+   Level 1 = the four-stage learning mode; Level 2 = the final exam
+   (no letters on the zombies, hear-and-spell only). Each level keeps its
+   own stars per word: 'stars' for Level 1, 'stars2' for Level 2.
    ========================================================================== */
-function startWordCure(words) {
+function startWordCure(words, level) {
   if (!words || !words.length) return;
+  level = (level === 2) ? 2 : 1;
   removeOverlay();
   // English-only mode: spelling is English, so force the game to English.
   // (There is no language setter; the title button's own handler is the only
@@ -408,7 +470,8 @@ function startWordCure(words) {
   SZ.startLevel(1, false); // fresh level; base banners are overridden below
   installHooks();
   WC = {
-    words: words.map(function (w) { return { w: w, stars: 0, attempts: 0 }; }),
+    level: level, viewLevel: level, // viewLevel = which level's stars the Word Book shows
+    words: words.map(function (w) { return { w: w, stars: 0, stars2: 0, attempts: 0 }; }),
     over: false, curing: null, sessionStars: 0, trickleT: 20
   };
   wcOn = true;
@@ -416,11 +479,18 @@ function startWordCure(words) {
   buildWordBookButton();
   var p = SZ.player();
   for (var i = 0; i < 4; i++) spawnCarrierNear(p); // first patients, near the kid
-  SZ.kit.banner('📚 Word Cure! Walk up to a zombie to cure it with words.', 4);
+  if (level === 2) {
+    SZ.kit.banner('🎧 Final exam! Zombies show no letters — hear the word, spell it!', 4);
+  } else {
+    SZ.kit.banner('📚 Word Cure! Walk up to a zombie to cure it with words.', 4);
+  }
   // the base game shows its "save the school" banner 4.8s after level start;
   // in Word Cure mode it must say this instead (fires just after, like Sukkot)
   setTimeout(function () {
-    if (active()) SZ.kit.banner('📚 No fighting — just spelling! Get close to a zombie.', 4);
+    if (!active()) return;
+    SZ.kit.banner(WC.level === 2
+      ? '🎧 No letters to copy — listen carefully, then spell!'
+      : '📚 No fighting — just spelling! Get close to a zombie.', 4);
   }, 4830);
   SZ.kit.toast('Tap the 📚 Word Book to see your words', 5);
 }
@@ -590,11 +660,39 @@ function makeBubbleSprite(scrambled) {
 
 function attachBubble(zb) {
   removeBubble(zb);
-  var sp = makeBubbleSprite(zb.wordCure.scrambled);
+  // Level 2 (final exam): the zombie carries NO letters — a "?" bubble, so
+  // the player can still spot word-carriers but cannot preview the word.
+  var sp = (WC && WC.level === 2) ? makeExamBubble() : makeBubbleSprite(zb.wordCure.scrambled);
   if (zb.giant) sp.scale.multiplyScalar(1.35);
   zb.wordCure.bubble = sp;
   kit.scene().add(sp);
   positionBubble(zb);
+}
+
+/* Level 2 exam bubble: one "?" tile — a carrier marker with zero letters. */
+function makeExamBubble() {
+  var tile = 72, pad = 34, cw = pad * 2 + tile, chh = 148;
+  var cv = document.createElement('canvas');
+  cv.width = cw; cv.height = chh;
+  var g = cv.getContext('2d');
+  g.fillStyle = 'rgba(255,255,255,0.96)';
+  roundRectPath(g, 4, 4, cw - 8, chh - 8, 32); g.fill();
+  g.lineWidth = 7; g.strokeStyle = '#7b1fa2'; g.stroke();
+  g.fillStyle = '#7b1fa2';
+  g.font = 'bold 30px Arial'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('🎧', cw / 2, 26);
+  g.fillStyle = '#ede7f6';
+  roundRectPath(g, pad + 4, 52, tile - 8, tile - 8, 12); g.fill();
+  g.lineWidth = 3; g.strokeStyle = '#7b1fa2'; g.stroke();
+  g.fillStyle = '#4a148c';
+  g.font = 'bold 44px Arial';
+  g.fillText('?', cw / 2, 52 + (tile - 8) / 2 + 2);
+  var tex = new THREE.CanvasTexture(cv);
+  tex.minFilter = THREE.LinearFilter;
+  var sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true }));
+  var baseW = 3.2;
+  sp.scale.set(baseW, baseW * chh / cw, 1);
+  return sp;
 }
 function positionBubble(zb) {
   var sp = zb.wordCure && zb.wordCure.bubble;
@@ -623,11 +721,12 @@ function carriedWords() {
 
 function assignWordTo(zb) {
   if (!WC) return false;
-  var idx = pickWordIndex(WC.words, carriedWords());
+  var idx = pickWordIndex(WC.words, carriedWords(), WC.level === 2 ? 'stars2' : 'stars');
   if (idx < 0) return false;
   var e = WC.words[idx];
   e.attempts++;
-  zb.wordCure = { word: e.w, scrambled: scrambleLetters(e.w), bubble: null, cured: false, coolT: 0 };
+  zb.wordCure = { word: e.w, scrambled: scrambleLetters(e.w), bubble: null, cured: false, coolT: 0,
+    exam: (WC.level === 2) }; // exam carriers show the "?" bubble, no letters
   attachBubble(zb);
   return true;
 }
@@ -782,10 +881,20 @@ function davenCopy(zb, dt) {
    the modal while the DOM minigame stays fully interactive.
    ========================================================================== */
 function setStageHead(word, stage, title) {
+  overlayHead.innerHTML = '';
+  /* Level 2 (final exam): a single hear-and-spell stage - the word never
+     appears, there are no stage dots, just the exam framing. */
+  if (WC && WC.level === 2) {
+    overlayHead.appendChild(el('div', 'wc-title', '🎧 Final exam'));
+    overlayHead.appendChild(el('div', 'wc-stage', 'Hear the word… then spell it!'));
+    var xe = el('button', 'wc-x', '✕ Leave');
+    xe.onclick = function () { SZ.SFX.click(); leaveCure(); };
+    overlayHead.appendChild(xe);
+    return;
+  }
   var dots = '';
   for (var i = 1; i <= 4; i++)
     dots += '<span class="wc-dot' + (i < stage ? ' done' : (i === stage ? ' now' : '')) + '"></span>';
-  overlayHead.innerHTML = '';
   /* Scaffold fading (v1.0.1): the correct spelling is shown ONLY in stage 1
      ("See & Hear", the teaching stage). In stages 2-4 the header stays
      neutral so the player must RECALL the spelling instead of copying it.
@@ -808,14 +917,15 @@ function openCure(zb) {
   if (document.pointerLockElement) { try { document.exitPointerLock(); } catch (e) {} }
   WC.curing = {
     zb: zb, word: zb.wordCure.word, scrambled: zb.wordCure.scrambled,
-    stage: 1, mistakes: 0, hints: 0, timers: [], done: false,
+    stage: (WC.level === 2 ? 4 : 1), mistakes: 0, hints: 0, timers: [], done: false,
     idx4: 0, slots4: null
   };
   if (zb.wordCure.bubble) zb.wordCure.bubble.visible = false;
   if (SZ.G) SZ.G.state = 'paused'; // soft-pause (see note above)
   SZ.showScreen(null);             // keeps the HUD visible while paused
   buildOverlay();
-  renderStage1();
+  // Level 2 (final exam): skip straight to the hear-and-spell stage.
+  if (WC.level === 2) renderStage4(); else renderStage1();
   SZ.SFX.click();
 }
 
@@ -1040,7 +1150,11 @@ function renderStage4() {
   var c = WC.curing; if (!c || !overlayBody) return;
   setStageHead(c.word, 4, 'Spell It Yourself');
   overlayBody.innerHTML = '';
-  overlayBody.appendChild(el('p', 'wc-help', 'Listen… now spell the word from memory!'));
+  // Level 2 entry comes from walking up (no tap gesture), so the browser may
+  // block the automatic speech - the help text points at the Hear button.
+  overlayBody.appendChild(el('p', 'wc-help', (WC.level === 2)
+    ? 'Tap 🔊 Hear the word, then spell it from memory!'
+    : 'Listen… now spell the word from memory!'));
   var ans = el('div', 'wc-answer');
   var slots = [];
   for (var i = 0; i < c.word.length; i++) { var sl = el('span', 'wc-slot', '·'); ans.appendChild(sl); slots.push(sl); }
@@ -1099,9 +1213,10 @@ function completeCure() {
   if (!c || c.done) return;
   c.done = true;
   var stars = awardStars(c.mistakes, c.hints); // 3 = flawless, 2 = minor help, 1 = heavy help
+  var sk = (WC.level === 2) ? 'stars2' : 'stars'; // each level keeps its own stars
   var e = null, i;
   for (i = 0; i < WC.words.length; i++) if (WC.words[i].w === c.word) { e = WC.words[i]; break; }
-  if (e && stars > e.stars) e.stars = stars;
+  if (e && stars > e[sk]) e[sk] = stars;
   WC.sessionStars += stars;
   if (WC.sessionStars > bestSessionStars) bestSessionStars = WC.sessionStars;
   var zb = c.zb;
@@ -1117,9 +1232,16 @@ function completeCure() {
   // spaced repetition: words below 3 stars stay in the queue (pickWordIndex
   // skips 3-star words), so they reappear on later zombies automatically
   var done = true;
-  for (i = 0; i < WC.words.length; i++) if (WC.words[i].stars < 3) { done = false; break; }
+  for (i = 0; i < WC.words.length; i++) if (WC.words[i][sk] < 3) { done = false; break; }
   if (done) {
-    setTimeout(function () { if (active()) showDiploma(); }, 1700);
+    // Level 1 done -> unlock the final exam for this word list, forever
+    // (this page visit); Level 2 done -> the Word Master Diploma.
+    if (WC.level === 1) {
+      level2UnlockKey = levelListKey(WC.words.map(function (x) { return x.w; }));
+      setTimeout(function () { if (active()) showDiploma(); }, 1700);
+    } else {
+      setTimeout(function () { if (active()) showMasterDiploma(); }, 1700);
+    }
   } else if (stars < 3) {
     SZ.kit.toast('⭐ ' + starStr(stars) + ' — "' + c.word.toUpperCase() + '" will visit again for practice!', 4);
   } else {
@@ -1158,9 +1280,17 @@ function buildWordBookButton() {
 }
 function updateWbBtn() {
   if (!wbBtn || !WC) return;
-  var m = 0, i;
-  for (i = 0; i < WC.words.length; i++) if (WC.words[i].stars >= 3) m++;
-  wbBtn.textContent = '📚 Word Book ' + m + '/' + WC.words.length + ' ★' + WC.sessionStars;
+  var sk = bookSk(), m = 0, i;
+  for (i = 0; i < WC.words.length; i++) if (WC.words[i][sk] >= 3) m++;
+  wbBtn.textContent = '📚 Word Book' + (WC.viewLevel === 2 ? ' 🎧' : '') +
+    ' ' + m + '/' + WC.words.length + ' ★' + WC.sessionStars;
+}
+/* The book can show either level's stars; the Level 2 tab appears once the
+   exam is unlocked for the current list (or when already viewing it). */
+function bookSk() { return (WC && WC.viewLevel === 2) ? 'stars2' : 'stars'; }
+function level2UnlockedNow() {
+  if (!WC || !level2UnlockKey) return false;
+  return levelListKey(WC.words.map(function (x) { return x.w; })) === level2UnlockKey;
 }
 function toggleWordBook() {
   if (wbPanel) { hideWordBook(); return; }
@@ -1171,16 +1301,27 @@ function toggleWordBook() {
 function refreshWordBook() {
   if (!wbPanel || !WC) return;
   wbPanel.innerHTML = '';
-  var m = 0, i;
-  for (i = 0; i < WC.words.length; i++) if (WC.words[i].stars >= 3) m++;
+  var sk = bookSk(), m = 0, i;
+  for (i = 0; i < WC.words.length; i++) if (WC.words[i][sk] >= 3) m++;
   wbPanel.appendChild(el('div', 'wc-wb-title', '📚 Word Book'));
+  if (level2UnlockedNow() || WC.viewLevel === 2) {
+    (function () {
+      var tgl = el('div', 'wc-btnrow'), v = WC.viewLevel;
+      var l1 = el('button', 'wc-btn' + (v !== 2 ? ' primary' : ''), '🩺 Level 1');
+      var l2 = el('button', 'wc-btn' + (v === 2 ? ' primary' : ''), '🎧 Level 2');
+      l1.onclick = function () { SZ.SFX.click(); WC.viewLevel = 1; refreshWordBook(); updateWbBtn(); };
+      l2.onclick = function () { SZ.SFX.click(); WC.viewLevel = 2; refreshWordBook(); updateWbBtn(); };
+      tgl.appendChild(l1); tgl.appendChild(l2);
+      wbPanel.appendChild(tgl);
+    })();
+  }
   wbPanel.appendChild(el('div', 'wc-wb-sub', 'Mastered: <b>' + m + ' / ' + WC.words.length + '</b>'));
   wbPanel.appendChild(el('div', 'wc-wb-sub', 'Best stars this visit: <b>★' + bestSessionStars + '</b>'));
   var list = el('div', 'wc-wb-list');
   for (i = 0; i < WC.words.length; i++) {
     var e = WC.words[i];
-    list.appendChild(el('div', 'wc-wb-row' + (e.stars >= 3 ? ' mastered' : ''),
-      '<span>' + e.w.toUpperCase() + '</span><span>' + starStr(e.stars) + '</span>'));
+    list.appendChild(el('div', 'wc-wb-row' + (e[sk] >= 3 ? ' mastered' : ''),
+      '<span>' + e.w.toUpperCase() + '</span><span>' + starStr(e[sk]) + '</span>'));
   }
   wbPanel.appendChild(list);
   var qb = el('button', 'wc-btn', '🏠 Quit to title');
@@ -1216,13 +1357,50 @@ function showDiploma() {
   var again = el('button', 'wc-btn primary', '🔁 Play again');
   again.onclick = function () {
     SZ.SFX.click();
-    startWordCure(WC.words.map(function (e) { return e.w; }));
+    startWordCure(WC.words.map(function (e) { return e.w; }), 1);
+  };
+  // Level 1 is mastered -> the final exam is unlocked: offer it right here.
+  var lvl2 = el('button', 'wc-btn primary', '🎧 Level 2: Word Master');
+  lvl2.onclick = function () {
+    SZ.SFX.click();
+    startWordCure(WC.words.map(function (e) { return e.w; }), 2);
   };
   var home = el('button', 'wc-btn', '🏠 Title');
   home.onclick = function () { SZ.SFX.click(); quitToTitle(); };
-  row.appendChild(again); row.appendChild(home);
+  row.appendChild(again); row.appendChild(lvl2); row.appendChild(home);
   overlayBody.appendChild(row);
   speak('Congratulations, Word Doctor!');
+}
+
+/* Level 2 complete: every word spelled from hearing alone, 3 stars each. */
+function showMasterDiploma() {
+  if (!active()) return;
+  if (SZ.G) SZ.G.state = 'paused';
+  SZ.showScreen(null);
+  buildOverlay();
+  overlayHead.appendChild(el('div', 'wc-title', '🏆 Word Master Diploma'));
+  overlayBody.appendChild(el('div', 'wc-diploma', '🏆'));
+  overlayBody.appendChild(el('p', 'wc-help',
+    'Incredible! You spelled all <b>' + WC.words.length + '</b> words <b>from hearing alone</b> — no letters, no copying, 3 stars each. You are a true <b>Word Master</b>!'));
+  overlayBody.appendChild(el('p', 'wc-stars-big', '★★★ × ' + WC.words.length));
+  confetti(); confetti(); confetti();
+  try { if (SZ.SFX.hashemLovesMe) SZ.SFX.hashemLovesMe(); } catch (e) {}
+  var row = el('div', 'wc-btnrow');
+  var again = el('button', 'wc-btn primary', '🔁 Exam again');
+  again.onclick = function () {
+    SZ.SFX.click();
+    startWordCure(WC.words.map(function (e) { return e.w; }), 2);
+  };
+  var learn = el('button', 'wc-btn', '🩺 Level 1');
+  learn.onclick = function () {
+    SZ.SFX.click();
+    startWordCure(WC.words.map(function (e) { return e.w; }), 1);
+  };
+  var home = el('button', 'wc-btn', '🏠 Title');
+  home.onclick = function () { SZ.SFX.click(); quitToTitle(); };
+  row.appendChild(again); row.appendChild(learn); row.appendChild(home);
+  overlayBody.appendChild(row);
+  speak('Congratulations, Word Master!');
 }
 
 })();
