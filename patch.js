@@ -1,9 +1,9 @@
-// SIG:tEVbLAmBwLnwbWJm5qJHuqmtRTrSSByvuVunHt4epvDjZGUUuAUi7CP7lpfmWb3S7kBPC/BnU0GwTgyrx21+Bw==
+// SIG:ly4Q9MJcq5pDh9TbUDad8YiYEMCmX1ge+Kuuz6AUZt452hg5ZBacO2QiPn7dNlkPoEQbwVEiWB7YyOClsGWqWw==
 (function () {
 'use strict';
 /* ============================================================================
    Super Zombie — "Word Cure" spelling patch
-   Version 1.1.0
+   Version 1.1.1
    Copyright (C) 2026 Gumb Dames
    SPDX-License-Identifier: AGPL-3.0-only
 
@@ -22,6 +22,10 @@
    jumps straight to hear-and-spell. All words at 3 stars in the exam earns
    the Word Master Diploma. Desktop parent shortcut: hold Shift on the title
    screen and the button reads "📚 Word Cure 2"; clicking starts Level 2.
+   Schools (v1.1.1): Level 1 takes place in the Noam school (base level 4),
+   Level 2 in the Yavne school (base level 5) — the base game's own school
+   buildings. The night2 level-progression is defused in-mode (no portal,
+   no win screen): the session simply rolls into a fresh day at its school.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Affero General Public License as published by
@@ -32,7 +36,7 @@
    Mockable for tests: the loader suite overrides Date.now. */
 if (Date.now() >= Date.UTC(2026, 9, 17, 0, 0, 0)) return; // Oct 17 2026 00:00 UTC
 
-window.WORDCURE_PATCH_VERSION = '1.1.0'; // stamp (after the gate: expired => zero trace)
+window.WORDCURE_PATCH_VERSION = '1.1.1'; // stamp (after the gate: expired => zero trace)
 
 var SZ = window.SZ20;
 if (!SZ || !SZ.HOOKS || !SZ.kit || !SZ.spawnBird) return; // needs game v2.0.25+
@@ -169,7 +173,7 @@ function starStr(n) { var s = ''; for (var i = 0; i < 3; i++) s += i < n ? '★'
 Object.defineProperty(window, 'WORDCURE_TEST', {
   enumerable: false, configurable: true, writable: false,
   value: {
-    version: '1.1.0',
+    version: '1.1.1',
     parseWordList: parseWordList,
     scrambleLetters: scrambleLetters,
     awardStars: awardStars,
@@ -322,6 +326,12 @@ var wcOn = false, hooked = false, wasHe = false;
    sets wantLevel2 and bypasses the lock (explicit adult gesture). */
 var level2UnlockKey = null, wantLevel2 = false;
 function levelListKey(words) { return words.slice().sort().join('|'); }
+/* Schools (v1.1.1): Word Cure Level 1 plays in the Noam school, Level 2 in
+   the Yavne school — the base game's own school buildings (base levels 4/5).
+   Short English display names for patch UI (the mode is English-only; the
+   3D building signs keep the game's own full names). */
+function wcSchool(wcLevel) { return (wcLevel === 2) ? 'Yavne School' : 'Noam School'; }
+function wcBaseLevel(wcLevel) { return (wcLevel === 2) ? 5 : 4; } // Noam=4, Yavne=5
 var WC = null;              // active session (null when not playing)
 var bestSessionStars = 0;   // best star total, page lifetime (like Sukkot's best-five)
 var wcSavedDisplay = null;  // original display values of UI hidden in-mode
@@ -431,9 +441,9 @@ function beginWith(words, msg) {
     b2.className = 'wc-btn' + (lvl === 2 ? ' primary' : '');
     if (start) start.textContent = lvl === 2 ? '🎧 Start the exam!' : '🩺 Start curing!';
   }
-  var b1 = el('button', 'wc-btn' + (lvl === 1 ? ' primary' : ''), '🩺 Level 1 — Learn');
+  var b1 = el('button', 'wc-btn' + (lvl === 1 ? ' primary' : ''), '🩺 Level 1 — Noam School');
   var b2 = el('button', 'wc-btn' + (lvl === 2 ? ' primary' : ''),
-    (unlocked || wantLevel2) ? '🎧 Level 2 — Final exam' : '🔒 Level 2 — finish Level 1 first');
+    (unlocked || wantLevel2) ? '🎧 Level 2 — Yavne School' : '🔒 Level 2 — Yavne School (finish Level 1 first)');
   b1.onclick = function () { SZ.SFX.click(); lvl = 1; paintLvl(); };
   b2.onclick = function () {
     SZ.SFX.click();
@@ -467,7 +477,10 @@ function startWordCure(words, level) {
     if (wasHe) { var bl = document.getElementById('btnLang'); if (bl) bl.click(); }
   }
   SZ.showScreen(null);
-  SZ.startLevel(1, false); // fresh level; base banners are overridden below
+  // v1.1.1: each Word Cure level plays in its own school — Level 1 in the
+  // Noam school (base level 4), Level 2 in the Yavne school (base level 5).
+  // Base banners are overridden below.
+  SZ.startLevel(wcBaseLevel(level), false);
   installHooks();
   WC = {
     level: level, viewLevel: level, // viewLevel = which level's stars the Word Book shows
@@ -480,9 +493,9 @@ function startWordCure(words, level) {
   var p = SZ.player();
   for (var i = 0; i < 4; i++) spawnCarrierNear(p); // first patients, near the kid
   if (level === 2) {
-    SZ.kit.banner('🎧 Final exam! Zombies show no letters — hear the word, spell it!', 4);
+    SZ.kit.banner('🎧 Final exam at ' + wcSchool(2) + '! Zombies show no letters — hear the word, spell it!', 4);
   } else {
-    SZ.kit.banner('📚 Word Cure! Walk up to a zombie to cure it with words.', 4);
+    SZ.kit.banner('📚 Word Cure at ' + wcSchool(1) + '! Walk up to a zombie to cure it with words.', 4);
   }
   // the base game shows its "save the school" banner 4.8s after level start;
   // in Word Cure mode it must say this instead (fires just after, like Sukkot)
@@ -505,6 +518,8 @@ function installHooks() {
   H._wcUsePower = H.usePower;           H.usePower = wordCureUsePower;
   H._wcUseFart = H.useFart;             H.useFart = wordCureUseFart;
   H._wcGameOver = H.gameOver;           H.gameOver = wordCureGameOver;
+  H._wcUpdateDayNight = H.updateDayNight; H.updateDayNight = wordCureUpdateDayNight;
+  H._wcVictory = H.victory;               H.victory = wordCureVictory;
   // leaving to the menu / restarting the level drops Word Cure quietly
   document.getElementById('btnQuit').addEventListener('click', exitWordCure);
   document.getElementById('btnRestartLevel').addEventListener('click', exitWordCure);
@@ -607,8 +622,37 @@ function wordCureGameOver() {
     '<div style="font-size:15px;opacity:0.9">Best stars (while the game is open): <b>★' + bestSessionStars + '</b></div>';
   var rb = document.getElementById('btnRetry');
   rb.textContent = '📚 Cure again';
-  rb.onclick = function () { SZ.SFX.click(); startWordCure(retryWords); };
+  var retryLevel = WC.level;
+  rb.onclick = function () { SZ.SFX.click(); startWordCure(retryWords, retryLevel); };
   removeWordBook(); // rebuilt on retry
+}
+
+/* Day/night + victory guards (v1.1.1). Word Cure plays on base levels 4/5
+   (Noam/Yavne schools), whose night2 endings assume the campaign:
+   - level 4's night2 end calls levelComplete(): mass-repents EVERY carrier
+     (wiping the session's words) and opens the next-school portal;
+   - level 5's cured giant fires HOOKS.victory(): the win screen over the exam.
+   In Word Cure there is no campaign and no next school: the night2
+   transition is defused into a fresh day at the same school, and victory is
+   swallowed (curing the giant is just another exam cure). */
+function wordCureUpdateDayNight(dt) {
+  var G = SZ.G;
+  if (active() && G && G.phase === 'night2') {
+    var len = (SZ.CFG && SZ.CFG.nightLength) || 160;
+    if (G.phaseT + dt >= len) {
+      G.phase = 'day1'; G.phaseT = 0; // a fresh day at the same school
+      return; // skip this tick's transition (sky resumes next tick)
+    }
+  }
+  H._wcUpdateDayNight(dt);
+  if (!active()) return;
+  // the level-5 giant is just another word-carrier here: no boss bar
+  var bb = document.getElementById('bossbar');
+  if (bb && bb.style.display !== 'none') bb.style.display = 'none';
+}
+function wordCureVictory() {
+  if (!active()) return H._wcVictory();
+  // swallow the base-game win screen while a Word Cure session is active
 }
 
 /* ==========================================================================
@@ -1303,7 +1347,7 @@ function refreshWordBook() {
   wbPanel.innerHTML = '';
   var sk = bookSk(), m = 0, i;
   for (i = 0; i < WC.words.length; i++) if (WC.words[i][sk] >= 3) m++;
-  wbPanel.appendChild(el('div', 'wc-wb-title', '📚 Word Book'));
+  wbPanel.appendChild(el('div', 'wc-wb-title', '📚 Word Book — ' + wcSchool(WC.viewLevel)));
   if (level2UnlockedNow() || WC.viewLevel === 2) {
     (function () {
       var tgl = el('div', 'wc-btnrow'), v = WC.viewLevel;
@@ -1349,7 +1393,7 @@ function showDiploma() {
   overlayHead.appendChild(el('div', 'wc-title', '🎓 Word Doctor Diploma'));
   overlayBody.appendChild(el('div', 'wc-diploma', '🎓'));
   overlayBody.appendChild(el('p', 'wc-help',
-    'Amazing, Doctor! You cured all <b>' + WC.words.length + '</b> words with 3 stars each. The whole neighborhood is healthy!'));
+    'Amazing, Doctor! You cured all <b>' + WC.words.length + '</b> words with 3 stars each. <b>Noam School</b> is healthy!'));
   overlayBody.appendChild(el('p', 'wc-stars-big', '★★★ × ' + WC.words.length));
   confetti(); confetti();
   try { if (SZ.SFX.hashemLovesMe) SZ.SFX.hashemLovesMe(); } catch (e) {}
@@ -1381,7 +1425,7 @@ function showMasterDiploma() {
   overlayHead.appendChild(el('div', 'wc-title', '🏆 Word Master Diploma'));
   overlayBody.appendChild(el('div', 'wc-diploma', '🏆'));
   overlayBody.appendChild(el('p', 'wc-help',
-    'Incredible! You spelled all <b>' + WC.words.length + '</b> words <b>from hearing alone</b> — no letters, no copying, 3 stars each. You are a true <b>Word Master</b>!'));
+    'Incredible! At <b>Yavne School</b> you spelled all <b>' + WC.words.length + '</b> words <b>from hearing alone</b> — no letters, no copying, 3 stars each. You are a true <b>Word Master</b>!'));
   overlayBody.appendChild(el('p', 'wc-stars-big', '★★★ × ' + WC.words.length));
   confetti(); confetti(); confetti();
   try { if (SZ.SFX.hashemLovesMe) SZ.SFX.hashemLovesMe(); } catch (e) {}
