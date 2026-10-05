@@ -1,9 +1,9 @@
-// SIG:ewOu3ZPAE4IrtGBsCTG320rYFPjx6EzUHsfHYGO3LPoq73miwHz5TSfjzBrn2PpFfNWaMvhSJKLmx9+BUKPyDw==
+// SIG:G6yK/3j16/FOnwDQ4QleSMndtMyhSsfDmQHBybpgfnKdNK6XmIcB8AhJWmAyGh8exQHmKz0brAywZ/89CXYRvw==
 (function () {
 'use strict';
 /* ============================================================================
    Super Zombie — "Word Cure" spelling patch
-   Version 1.0.0
+   Version 1.0.1
    Copyright (C) 2026 Gumb Dames
    SPDX-License-Identifier: AGPL-3.0-only
 
@@ -13,6 +13,9 @@
    neighbors join a parade behind your van. Words below 3 stars come back
    later (spaced repetition); master every word to earn the Word Doctor
    Diploma.
+   Scaffold fading: the correct spelling is shown only in stage 1 ("See &
+   Hear"); stages 2-4 hide it so the player recalls rather than copies
+   (v1.0.1).
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Affero General Public License as published by
@@ -23,7 +26,7 @@
    Mockable for tests: the loader suite overrides Date.now. */
 if (Date.now() >= Date.UTC(2026, 9, 17, 0, 0, 0)) return; // Oct 17 2026 00:00 UTC
 
-window.WORDCURE_PATCH_VERSION = '1.0.0'; // stamp (after the gate: expired => zero trace)
+window.WORDCURE_PATCH_VERSION = '1.0.1'; // stamp (after the gate: expired => zero trace)
 
 var SZ = window.SZ20;
 if (!SZ || !SZ.HOOKS || !SZ.kit || !SZ.spawnBird) return; // needs game v2.0.25+
@@ -158,7 +161,7 @@ function starStr(n) { var s = ''; for (var i = 0; i < 3; i++) s += i < n ? '★'
 Object.defineProperty(window, 'WORDCURE_TEST', {
   enumerable: false, configurable: true, writable: false,
   value: {
-    version: '1.0.0',
+    version: '1.0.1',
     parseWordList: parseWordList,
     scrambleLetters: scrambleLetters,
     awardStars: awardStars,
@@ -783,7 +786,15 @@ function setStageHead(word, stage, title) {
   for (var i = 1; i <= 4; i++)
     dots += '<span class="wc-dot' + (i < stage ? ' done' : (i === stage ? ' now' : '')) + '"></span>';
   overlayHead.innerHTML = '';
-  overlayHead.appendChild(el('div', 'wc-title', '📚 Cure: <b>' + word.toUpperCase() + '</b>'));
+  /* Scaffold fading (v1.0.1): the correct spelling is shown ONLY in stage 1
+     ("See & Hear", the teaching stage). In stages 2-4 the header stays
+     neutral so the player must RECALL the spelling instead of copying it.
+     A stuck player can still use the "Hear the word" button, replay the
+     cure, or press the Hint button (each hint counts against the stars). */
+  var headHtml = (stage === 1)
+    ? '📚 Cure: <b>' + word.toUpperCase() + '</b>'
+    : '📚 Cure the word!';
+  overlayHead.appendChild(el('div', 'wc-title', headHtml));
   overlayHead.appendChild(el('div', 'wc-stage', 'Stage ' + stage + ' of 4: ' + title));
   overlayHead.appendChild(el('div', 'wc-dots', dots));
   var x = el('button', 'wc-x', '✕ Leave');
