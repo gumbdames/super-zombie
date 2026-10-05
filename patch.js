@@ -1,980 +1,700 @@
-// SIG:OF6Kbu7aoCJLUU/lm4PirIxstGuAoFRqJ7UXsXcF32Ok0mrseRdVIsVhUavTxY1326anDT3kLr3Inv8h6ejx5g==
-/* ============================================================================
-   Super Zombie — Sukkot special (a local signed patch for סופר זומבי)
-   Version 1.0.1
-   Copyright (C) 2026 Gumb Dames
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, version 3 of the License.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU Affero General Public License for more details.
-
-   You should have received a copy of the GNU Affero General Public License
-   along with this program. If not, see <https://www.gnu.org/licenses/>.
-
-   Full license text:
-   ----------------------------------------------------------------------------
-                    GNU AFFERO GENERAL PUBLIC LICENSE
-                       Version 3, 19 November 2007
-
-    Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
-    Everyone is permitted to copy and distribute verbatim copies
-    of this license document, but changing it is not allowed.
-
-                               Preamble
-
-     The GNU Affero General Public License is a free, copyleft license for
-   software and other kinds of works, specifically designed to ensure
-   cooperation with the community in the case of network server software.
-
-     The licenses for most software and other practical works are designed
-   to take away your freedom to share and change the works.  By contrast,
-   our General Public Licenses are intended to guarantee your freedom to
-   share and change all versions of a program--to make sure it remains free
-   software for all its users.
-
-     When we speak of free software, we are referring to freedom, not
-   price.  Our General Public Licenses are designed to make sure that you
-   have the freedom to distribute copies of free software (and charge for
-   them if you wish), that you receive source code or can get it if you
-   want it, that you can change the software or use pieces of it in new
-   free programs, and that you know you can do these things.
-
-     Developers that use our General Public Licenses protect your rights
-   with two steps: (1) assert copyright on the software, and (2) offer
-   you this License which gives you legal permission to copy, distribute
-   and/or modify the software.
-
-     A secondary benefit of defending all users' freedom is that
-   improvements made in alternate versions of the program, if they
-   receive widespread use, become available for other developers to
-   incorporate.  Many developers of free software are heartened and
-   encouraged by the resulting cooperation.  However, in the case of
-   software used on network servers, this result may fail to come about.
-   The GNU General Public License permits making a modified version and
-   letting the public access it on a server without ever releasing its
-   source code to the public.
-
-     The GNU Affero General Public License is designed specifically to
-   ensure that, in such cases, the modified source code becomes available
-   to the community.  It requires the operator of a network server to
-   provide the source code of the modified version running there to the
-   users of that server.  Therefore, public use of a modified version, on
-   a publicly accessible server, gives the public access to the source
-   code of the modified version.
-
-     An older license, called the Affero General Public License and
-   published by Affero, was designed to accomplish similar goals.  This is
-   a different license, not a version of the Affero GPL, but Affero has
-   released a new version of the Affero GPL which permits relicensing under
-   this license.
-
-     The precise terms and conditions for copying, distribution and
-   modification follow.
-
-                          TERMS AND CONDITIONS
-
-     0. Definitions.
-
-     "This License" refers to version 3 of the GNU General Public License.
-
-     "Copyright" also means copyright-like laws that apply to other kinds of
-   works, such as semiconductor masks.
-
-     "The Program" refers to any copyrightable work licensed under this
-   License.  Each licensee is addressed as "you".  "Licensees" and
-   "recipients" may be individuals or organizations.
-
-     To "modify" a work means to copy from or adapt all or part of the work
-   in a fashion requiring copyright permission, other than the making of an
-   exact copy.  The resulting work is called a "modified version" of the
-   earlier work or a work "based on" the earlier work.
-
-     A "covered work" means either the unmodified Program or a work based
-   on the Program.
-
-     To "propagate" a work means to do anything with it that, without
-   permission, would make you directly or secondarily liable for
-   infringement under applicable copyright law, except executing it on a
-   computer or modifying a private copy.  Propagation includes copying,
-   distribution (with or without modification), making available to the
-   public, and in some countries other activities as well.
-
-     To "convey" a work means any kind of propagation that enables other
-   parties to make or receive copies.  Mere interaction with a user through
-   a computer network, with no transfer of a copy, is not conveying.
-
-     An interactive user interface displays "Appropriate Legal Notices"
-   to the extent that it includes a convenient and prominently visible
-   feature that (1) displays an appropriate copyright notice, and (2)
-   tells the user that there is no warranty for the work (except to the
-   extent that warranties are provided), that licensees may convey the
-   work under this License, and how to view a copy of this License.  If
-   the interface presents a list of user commands or options, such as a
-   menu, a prominent item in the list meets this criterion.
-
-     1. Source Code.
-
-     The "source code" for a work means the preferred form of the work
-   for making modifications to it.  "Object code" means any non-source
-   form of a work.
-
-     A "Standard Interface" means an interface that either is an official
-   standard defined by a recognized standards body, or, in the case of
-   interfaces specified for a particular programming language, one that
-   is widely used among developers working in that language.
-
-     The "System Libraries" of an executable work include anything, other
-   than the work as a whole, that (a) is included in the normal form of
-   packaging a Major Component, but which is not part of that Major
-   Component, and (b) serves only to enable use of the work with that
-   Major Component, or to implement a Standard Interface for which an
-   implementation is available to the public in source code form.  A
-   "Major Component", in this context, means a major essential component
-   (kernel, window system, and so on) of the specific operating system
-   (if any) on which the executable work runs, or a compiler used to
-   produce the work, or an object code interpreter used to run it.
-
-     The "Corresponding Source" for a work in object code form means all
-   the source code needed to generate, install, and (for an executable
-   work) run the object code and to modify the work, including scripts to
-   control those activities.  However, it does not include the work's
-   System Libraries, or general-purpose tools or generally available free
-   programs which are used unmodified in performing those activities but
-   which are not part of the work.  For example, Corresponding Source
-   includes interface definition files associated with source files for
-   the work, and the source code for shared libraries and dynamically
-   linked subprograms that the work is specifically designed to require,
-   such as by intimate data communication or control flow between those
-   subprograms and other parts of the work.
-
-     The Corresponding Source need not include anything that users
-   can regenerate automatically from other parts of the Corresponding
-   Source.
-
-     The Corresponding Source for a work in source code form is that
-   same work.
-
-     2. Basic Permissions.
-
-     All rights granted under this License are granted for the term of
-   copyright on the Program, and are irrevocable provided the stated
-   conditions are met.  This License explicitly affirms your unlimited
-   permission to run the unmodified Program.  The output from running a
-   covered work is covered by this License only if the output, given its
-   content, constitutes a covered work.  This License acknowledges your
-   rights of fair use or other equivalent, as provided by copyright law.
-
-     You may make, run and propagate covered works that you do not
-   convey, without conditions so long as your license otherwise remains
-   in force.  You may convey covered works to others for the sole purpose
-   of having them make modifications exclusively for you, or provide you
-   with facilities for running those works, provided that you comply with
-   the terms of this License in conveying all material for which you do
-   not control copyright.  Those thus making or running the covered works
-   for you must do so exclusively on your behalf, under your direction
-   and control, on terms that prohibit them from making any copies of
-   your copyrighted material outside their relationship with you.
-
-     Conveying under any other circumstances is permitted solely under
-   the conditions stated below.  Sublicensing is not allowed; section 10
-   makes it unnecessary.
-
-     3. Protecting Users' Legal Rights From Anti-Circumvention Law.
-
-     No covered work shall be deemed part of an effective technological
-   measure under any applicable law fulfilling obligations under article
-   11 of the WIPO copyright treaty adopted on 20 December 1996, or
-   similar laws prohibiting or restricting circumvention of such
-   measures.
-
-     When you convey a covered work, you waive any legal power to forbid
-   circumvention of technological measures to the extent such circumvention
-   is effected by exercising rights under this License with respect to
-   the covered work, and you disclaim any intention to limit operation or
-   modification of the work as a means of enforcing, against the work's
-   users, your or third parties' legal rights to forbid circumvention of
-   technological measures.
-
-     4. Conveying Verbatim Copies.
-
-     You may convey verbatim copies of the Program's source code as you
-   receive it, in any medium, provided that you conspicuously and
-   appropriately publish on each copy an appropriate copyright notice;
-   keep intact all notices stating that this License and any
-   non-permissive terms added in accord with section 7 apply to the code;
-   keep intact all notices of the absence of any warranty; and give all
-   recipients a copy of this License along with the Program.
-
-     You may charge any price or no price for each copy that you convey,
-   and you may offer support or warranty protection for a fee.
-
-     5. Conveying Modified Source Versions.
-
-     You may convey a work based on the Program, or the modifications to
-   produce it from the Program, in the form of source code under the
-   terms of section 4, provided that you also meet all of these conditions:
-
-       a) The work must carry prominent notices stating that you modified
-       it, and giving a relevant date.
-
-       b) The work must carry prominent notices stating that it is
-       released under this License and any conditions added under section
-       7.  This requirement modifies the requirement in section 4 to
-       "keep intact all notices".
-
-       c) You must license the entire work, as a whole, under this
-       License to anyone who comes into possession of a copy.  This
-       License will therefore apply, along with any applicable section 7
-       additional terms, to the whole of the work, and all its parts,
-       regardless of how they are packaged.  This License gives no
-       permission to license the work in any other way, but it does not
-       invalidate such permission if you have separately received it.
-
-       d) If the work has interactive user interfaces, each must display
-       Appropriate Legal Notices; however, if the Program has interactive
-       interfaces that do not display Appropriate Legal Notices, your
-       work need not make them do so.
-
-     A compilation of a covered work with other separate and independent
-   works, which are not by their nature extensions of the covered work,
-   and which are not combined with it such as to form a larger program,
-   in or on a volume of a storage or distribution medium, is called an
-   "aggregate" if the compilation and its resulting copyright are not
-   used to limit the access or legal rights of the compilation's users
-   beyond what the individual works permit.  Inclusion of a covered work
-   in an aggregate does not cause this License to apply to the other
-   parts of the aggregate.
-
-     6. Conveying Non-Source Forms.
-
-     You may convey a covered work in object code form under the terms
-   of sections 4 and 5, provided that you also convey the
-   machine-readable Corresponding Source under the terms of this License,
-   in one of these ways:
-
-       a) Convey the object code in, or embodied in, a physical product
-       (including a physical distribution medium), accompanied by the
-       Corresponding Source fixed on a durable physical medium
-       customarily used for software interchange.
-
-       b) Convey the object code in, or embodied in, a physical product
-       (including a physical distribution medium), accompanied by a
-       written offer, valid for at least three years and valid for as
-       long as you offer spare parts or customer support for that product
-       model, to give anyone who possesses the object code either (1) a
-       copy of the Corresponding Source for all the software in the
-       product that is covered by this License, on a durable physical
-       medium customarily used for software interchange, for a price no
-       more than your reasonable cost of physically performing this
-       conveying of source, or (2) access to copy the
-       Corresponding Source from a network server at no charge.
-
-       c) Convey individual copies of the object code with a copy of the
-       written offer to provide the Corresponding Source.  This
-       alternative is allowed only occasionally and noncommercially, and
-       only if you received the object code with such an offer, in accord
-       with subsection 6b.
-
-       d) Convey the object code by offering access from a designated
-       place (gratis or for a charge), and offer equivalent access to the
-       Corresponding Source in the same way through the same place at no
-       further charge.  You need not require recipients to copy the
-       Corresponding Source along with the object code.  If the place to
-       copy the object code is a network server, the Corresponding Source
-       may be on a different server (operated by you or a third party)
-       that supports equivalent copying facilities, provided you maintain
-       clear directions next to the object code saying where to find the
-       Corresponding Source.  Regardless of what server hosts the
-       Corresponding Source, you remain obligated to ensure that it is
-       available for as long as needed to satisfy these requirements.
-
-       e) Convey the object code using peer-to-peer transmission, provided
-       you inform other peers where the object code and Corresponding
-       Source of the work are being offered to the general public at no
-       charge under subsection 6d.
-
-     A separable portion of the object code, whose source code is excluded
-   from the Corresponding Source as a System Library, need not be
-   included in conveying the object code work.
-
-     A "User Product" is either (1) a "consumer product", which means any
-   tangible personal property which is normally used for personal, family,
-   or household purposes, or (2) anything designed or sold for incorporation
-   into a dwelling.  In determining whether a product is a consumer product,
-   doubtful cases shall be resolved in favor of coverage.  For a particular
-   product received by a particular user, "normally used" refers to a
-   typical or common use of that class of product, regardless of the status
-   of the particular user or of the way in which the particular user
-   actually uses, or expects or is expected to use, the product.  A product
-   is a consumer product regardless of whether the product has substantial
-   commercial, industrial or non-consumer uses, unless such uses represent
-   the only significant mode of use of the product.
-
-     "Installation Information" for a User Product means any methods,
-   procedures, authorization keys, or other information required to install
-   and execute modified versions of a covered work in that User Product from
-   a modified version of its Corresponding Source.  The information must
-   suffice to ensure that the continued functioning of the modified object
-   code is in no case prevented or interfered with solely because
-   modification has been made.
-
-     If you convey an object code work under this section in, or with, or
-   specifically for use in, a User Product, and the conveying occurs as
-   part of a transaction in which the right of possession and use of the
-   User Product is transferred to the recipient in perpetuity or for a
-   fixed term (regardless of how the transaction is characterized), the
-   Corresponding Source conveyed under this section must be accompanied
-   by the Installation Information.  But this requirement does not apply
-   if neither you nor any third party retains the ability to install
-   modified object code on the User Product (for example, the work has
-   been installed in ROM).
-
-     The requirement to provide Installation Information does not include a
-   requirement to continue to provide support service, warranty, or updates
-   for a work that has been modified or installed by the recipient, or for
-   the User Product in which it has been modified or installed.  Access to a
-   network may be denied when the modification itself materially and
-   adversely affects the operation of the network or violates the rules and
-   protocols for communication across the network.
-
-     Corresponding Source conveyed, and Installation Information provided,
-   in accord with this section must be in a format that is publicly
-   documented (and with an implementation available to the public in
-   source code form), and must require no special password or key for
-   unpacking, reading or copying.
-
-     7. Additional Terms.
-
-     "Additional permissions" are terms that supplement the terms of this
-   License by making exceptions from one or more of its conditions.
-   Additional permissions that are applicable to the entire Program shall
-   be treated as though they were included in this License, to the extent
-   that they are valid under applicable law.  If additional permissions
-   apply only to part of the Program, that part may be used separately
-   under those permissions, but the entire Program remains governed by
-   this License without regard to the additional permissions.
-
-     When you convey a copy of a covered work, you may at your option
-   remove any additional permissions from that copy, or from any part of
-   it.  (Additional permissions may be written to require their own
-   removal in certain cases when you modify the work.)  You may place
-   additional permissions on material, added by you to a covered work,
-   for which you have or can give appropriate copyright permission.
-
-     Notwithstanding any other provision of this License, for material you
-   add to a covered work, you may (if authorized by the copyright holders of
-   that material) supplement the terms of this License with terms:
-
-       a) Disclaiming warranty or limiting liability differently from the
-       terms of sections 15 and 16 of this License; or
-
-       b) Requiring preservation of specified reasonable legal notices or
-       author attributions in that material or in the Appropriate Legal
-       Notices displayed by works containing it; or
-
-       c) Prohibiting misrepresentation of the origin of that material, or
-       requiring that modified versions of such material be marked in
-       reasonable ways as different from the original version; or
-
-       d) Limiting the use for publicity purposes of names of licensors or
-       authors of the material; or
-
-       e) Declining to grant rights under trademark law for use of some
-       trade names, trademarks, or service marks; or
-
-       f) Requiring indemnification of licensors and authors of that
-       material by anyone who conveys the material (or modified versions of
-       it) with contractual assumptions of liability to the recipient, for
-       any liability that these contractual assumptions directly impose on
-       those licensors and authors.
-
-     All other non-permissive additional terms are considered "further
-   restrictions" within the meaning of section 10.  If the Program as you
-   received it, or any part of it, contains a notice stating that it is
-   governed by this License along with a term that is a further
-   restriction, you may remove that term.  If a license document contains
-   a further restriction but permits relicensing or conveying under this
-   License, you may add to a covered work material governed by the terms
-   of that license document, provided that the further restriction does
-   not survive such relicensing or conveying.
-
-     If you add terms to a covered work in accord with this section, you
-   must place, in the relevant source files, a statement of the
-   additional terms that apply to those files, or a notice indicating
-   where to find the applicable terms.
-
-     Additional terms, permissive or non-permissive, may be stated in the
-   form of a separately written license, or stated as exceptions;
-   the above requirements apply either way.
-
-     8. Termination.
-
-     You may not propagate or modify a covered work except as expressly
-   provided under this License.  Any attempt otherwise to propagate or
-   modify it is void, and will automatically terminate your rights under
-   this License (including any patent licenses granted under the third
-   paragraph of section 11).
-
-     However, if you cease all violation of this License, then your
-   license from a particular copyright holder is reinstated (a)
-   provisionally, unless and until the copyright holder explicitly and
-   finally terminates your license, and (b) permanently, if the copyright
-   holder fails to notify you of the violation by some reasonable means
-   prior to 60 days after the cessation.
-
-     Moreover, your license from a particular copyright holder is
-   reinstated permanently if the copyright holder notifies you of the
-   violation by some reasonable means, this is the first time you have
-   received notice of violation of this License (for any work) from that
-   copyright holder, and you cure the violation prior to 30 days after
-   your receipt of the notice.
-
-     Termination of your rights under this section does not terminate the
-   licenses of parties who have received copies or rights from you under
-   this License.  If your rights have been terminated and not permanently
-   reinstated, you do not qualify to receive new licenses for the same
-   material under section 10.
-
-     9. Acceptance Not Required for Having Copies.
-
-     You are not required to accept this License in order to receive or
-   run a copy of the Program.  Ancillary propagation of a covered work
-   occurring solely as a consequence of using peer-to-peer transmission
-   to receive a copy likewise does not require acceptance.  However,
-   nothing other than this License grants you permission to propagate or
-   modify any covered work.  These actions infringe copyright if you do
-   not accept this License.  Therefore, by modifying or propagating a
-   covered work, you indicate your acceptance of this License to do so.
-
-     10. Automatic Licensing of Downstream Recipients.
-
-     Each time you convey a covered work, the recipient automatically
-   receives a license from the original licensors, to run, modify and
-   propagate that work, subject to this License.  You are not responsible
-   for enforcing compliance by third parties with this License.
-
-     An "entity transaction" is a transaction transferring control of an
-   organization, or substantially all assets of one, or subdividing an
-   organization, or merging organizations.  If propagation of a covered
-   work results from an entity transaction, each party to that
-   transaction who receives a copy of the work also receives whatever
-   licenses to the work the party's predecessor in interest had or could
-   give under the previous paragraph, plus a right to possession of the
-   Corresponding Source of the work from the predecessor in interest, if
-   the predecessor has it or can get it with reasonable efforts.
-
-     You may not impose any further restrictions on the exercise of the
-   rights granted or affirmed under this License.  For example, you may
-   not impose a license fee, royalty, or other charge for exercise of
-   rights granted under this License, and you may not initiate litigation
-   (including a cross-claim or counterclaim in a lawsuit) alleging that
-   any patent claim is infringed by making, using, selling, offering for
-   sale, or importing the Program or any portion of it.
-
-     11. Patents.
-
-     A "contributor" is a copyright holder who authorizes use under this
-   License of the Program or a work on which the Program is based.  The
-   work thus licensed is called the contributor's "contributor version".
-
-     A contributor's "essential patent claims" are all patent claims
-   owned or controlled by the contributor, whether already acquired or
-   hereafter acquired, that would be infringed by some manner, permitted
-   by this License, of making, using, or selling its contributor version,
-   but do not include claims that would be infringed only as a
-   consequence of further modification of the contributor version.  For
-   purposes of this definition, "control" includes the right to grant
-   patent sublicenses in a manner consistent with the requirements of
-   this License.
-
-     Each contributor grants you a non-exclusive, worldwide, royalty-free
-   patent license under the contributor's essential patent claims, to
-   make, use, sell, offer for sale, import and otherwise run, modify and
-   propagate the contents of its contributor version.
-
-     In the following three paragraphs, a "patent license" is any express
-   agreement or commitment, however denominated, not to enforce a patent
-   (such as an express permission to practice a patent or covenant not to
-   sue for patent infringement).  To "grant" such a patent license to a
-   party means to make such an agreement or commitment not to enforce a
-   patent against the party.
-
-     If you convey a covered work, knowingly relying on a patent license,
-   and the Corresponding Source of the work is not available for anyone
-   to copy, free of charge and under the terms of this License, through a
-   publicly available network server or other readily accessible means,
-   then you must either (1) cause the Corresponding Source to be so
-   available, or (2) arrange to deprive yourself of the benefit of the
-   patent license for this particular work, or (3) arrange, in a manner
-   consistent with the requirements of this License, to extend the patent
-   license to downstream recipients.  "Knowingly relying" means you have
-   actual knowledge that, but for the patent license, your conveying the
-   covered work in a country, or your recipient's use of the covered work
-   in a country, would infringe one or more identifiable patents in that
-   country that you have reason to believe are valid.
-
-     If, pursuant to or in connection with a single transaction or
-   arrangement, you convey, or propagate by procuring conveyance of, a
-   covered work, and grant a patent license to some of the parties
-   receiving the covered work authorizing them to use, propagate, modify
-   or convey a specific copy of the covered work, then the patent license
-   you grant is automatically extended to all recipients of the covered
-   work and works based on it.
-
-     A patent license is "discriminatory" if it does not include within
-   the scope of its coverage, prohibits the exercise of, or is
-   conditioned on the non-exercise of one or more of the rights that are
-   specifically granted under this License.  You may not convey a covered
-   work if you are a party to an arrangement with a third party that is
-   in the business of distributing software, under which you make payment
-   to the third party based on the extent of your activity of conveying
-   the work, and under which the third party grants, to any of the
-   parties who would receive the covered work from you, a discriminatory
-   patent license (a) in connection with copies of the covered work
-   conveyed by you (or copies made from those copies), or (b) primarily
-   for and in connection with specific products or compilations that
-   contain the covered work, unless you entered into that arrangement,
-   or that patent license was granted, prior to 28 March 2007.
-
-     Nothing in this License shall be construed as excluding or limiting
-   any implied license or other defenses to infringement that may
-   otherwise be available to you under applicable patent law.
-
-     12. No Surrender of Others' Freedom.
-
-     If conditions are imposed on you (whether by court order, agreement or
-   otherwise) that contradict the conditions of this License, they do not
-   excuse you from the conditions of this License.  If you cannot convey a
-   covered work so as to satisfy simultaneously your obligations under this
-   License and any other pertinent obligations, then as a consequence you may
-   not convey it at all.  For example, if you agree to terms that obligate you
-   to collect a royalty for further conveying from those to whom you convey
-   the Program, the only way you could satisfy both those terms and this
-   License would be to refrain entirely from conveying the Program.
-
-     13. Remote Network Interaction; Use with the GNU General Public License.
-
-     Notwithstanding any other provision of this License, if you modify the
-   Program, your modified version must prominently offer all users
-   interacting with it remotely through a computer network (if your version
-   supports such interaction) an opportunity to receive the Corresponding
-   Source of your version by providing access to the Corresponding Source
-   from a network server at no charge, through some standard or customary
-   means of facilitating copying of software.  This Corresponding Source
-   shall include the Corresponding Source for any work covered by version 3
-   of the GNU General Public License that is incorporated pursuant to the
-   following paragraph.
-
-     Notwithstanding any other provision of this License, you have
-   permission to link or combine any covered work with a work licensed
-   under version 3 of the GNU General Public License into a single
-   combined work, and to convey the resulting work.  The terms of this
-   License will continue to apply to the part which is the covered work,
-   but the work with which it is combined will remain governed by version
-   3 of the GNU General Public License.
-
-     14. Revised Versions of this License.
-
-     The Free Software Foundation may publish revised and/or new versions of
-   the GNU Affero General Public License from time to time.  Such new versions will
-   be similar in spirit to the present version, but may differ in detail to
-   address new problems or concerns.
-
-     Each version is given a distinguishing version number.  If the
-   Program specifies that a certain numbered version of the GNU Affero General
-   Public License "or any later version" applies to it, you have the
-   option of following the terms and conditions either of that numbered
-   version or of any later version published by the Free Software
-   Foundation.  If the Program does not specify a version number of the
-   GNU Affero General Public License, you may choose any version ever published
-   by the Free Software Foundation.
-
-     If the Program specifies that a proxy can decide which future
-   versions of the GNU Affero General Public License can be used, that proxy's
-   public statement of acceptance of a version permanently authorizes you
-   to choose that version for the Program.
-
-     Later license versions may give you additional or different
-   permissions.  However, no additional obligations are imposed on any
-   author or copyright holder as a result of your choosing to follow a
-   later version.
-
-     15. Disclaimer of Warranty.
-
-     THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
-   APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
-   HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
-   OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
-   THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-   PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
-   IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
-   ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-
-     16. Limitation of Liability.
-
-     IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
-   WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
-   THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
-   GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
-   USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
-   DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
-   PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
-   EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
-   SUCH DAMAGES.
-
-     17. Interpretation of Sections 15 and 16.
-
-     If the disclaimer of warranty and limitation of liability provided
-   above cannot be given local legal effect according to their terms,
-   reviewing courts shall apply local law that most closely approximates
-   an absolute waiver of all civil liability in connection with the
-   Program, unless a warranty or assumption of liability accompanies a
-   copy of the Program in return for a fee.
-
-                        END OF TERMS AND CONDITIONS
-
-               How to Apply These Terms to Your New Programs
-
-     If you develop a new program, and you want it to be of the greatest
-   possible use to the public, the best way to achieve this is to make it
-   free software which everyone can redistribute and change under these terms.
-
-     To do so, attach the following notices to the program.  It is safest
-   to attach them to the start of each source file to most effectively
-   state the exclusion of warranty; and each file should have at least
-   the "copyright" line and a pointer to where the full notice is found.
-
-       <one line to give the program's name and a brief idea of what it does.>
-       Copyright (C) <year>  <name of author>
-
-       This program is free software: you can redistribute it and/or modify
-       it under the terms of the GNU Affero General Public License as published by
-       the Free Software Foundation, either version 3 of the License, or
-       (at your option) any later version.
-
-       This program is distributed in the hope that it will be useful,
-       but WITHOUT ANY WARRANTY; without even the implied warranty of
-       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-       GNU Affero General Public License for more details.
-
-       You should have received a copy of the GNU Affero General Public License
-       along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-   Also add information on how to contact you by electronic and paper mail.
-
-     If your software can interact with users remotely through a computer
-   network, you should also make sure that it provides a way for users to
-   get its source.  For example, if your program is a web application, its
-   interface could display a "Source" link that leads users to an archive
-   of the code.  There are many ways you could offer source, and different
-   solutions will be better for different programs; see section 13 for the
-   specific requirements.
-
-     You should also get your employer (if you work as a programmer) or school,
-   if any, to sign a "copyright disclaimer" for the program, if necessary.
-   For more information on this, and how to apply and follow the GNU AGPL, see
-   <https://www.gnu.org/licenses/>.
-   ============================================================================ */
-/* ================================================================
-   SUKKOT SPECIAL for Super Zombie (סופר זומבי) — v1.0.1
-   ----------------------------------------------------------------
-   This file is loaded by the game ONLY if it carries a valid
-   signature (see sign-patch.js). It runs nothing unless the date
-   is before 2026-10-04 (hard-coded cutoff below).
-
-   The game: defend the sukkah in the middle of the Yavne
-   schoolyard. Zombies stream in from the edges of the world and
-   march on the sukkah — keep it standing (and stay alive!) as
-   long as you can. Permanent daytime. The start is calm and the
-   pressure builds slowly; only un-repented zombies count toward
-   the spawn cap, so the waves never stop — the game can in theory
-   go on forever. Your score is your survival time; the best
-   5 scores are kept while the page stays open.
-   ================================================================ */
+// SIG:ewOu3ZPAE4IrtGBsCTG320rYFPjx6EzUHsfHYGO3LPoq73miwHz5TSfjzBrn2PpFfNWaMvhSJKLmx9+BUKPyDw==
 (function () {
 'use strict';
+/* ============================================================================
+   Super Zombie — "Word Cure" spelling patch
+   Version 1.0.0
+   Copyright (C) 2026 Gumb Dames
+   SPDX-License-Identifier: AGPL-3.0-only
 
-/* ---- 0. Date gate: this special only loads before 2026-10-04 ---- */
-if (Date.now() >= Date.UTC(2026, 9, 4, 0, 0, 0)) return; // Oct 4 2026 00:00 UTC
+   A signed optional patch for Super Zombie v2.1.1. Zombies carry scrambled
+   English words in floating bubbles; walk up to one to open a gentle 4-stage
+   spelling minigame and cure it. No killing, no weapons, no violence — cured
+   neighbors join a parade behind your van. Words below 3 stars come back
+   later (spaced repetition); master every word to earn the Word Doctor
+   Diploma.
 
-var SUKKOT_PATCH_VERSION = '1.0.1';
-window.SUKKOT_PATCH_VERSION = SUKKOT_PATCH_VERSION;
+   This program is free software: you can redistribute it and/or modify it
+   under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, version 3 of the License.
+   ========================================================================== */
+
+/* ---- 0. Date gate (FIRST statement): the patch goes quiet after this ----
+   Mockable for tests: the loader suite overrides Date.now. */
+if (Date.now() >= Date.UTC(2026, 9, 17, 0, 0, 0)) return; // Oct 17 2026 00:00 UTC
+
+window.WORDCURE_PATCH_VERSION = '1.0.0'; // stamp (after the gate: expired => zero trace)
 
 var SZ = window.SZ20;
 if (!SZ || !SZ.HOOKS || !SZ.kit || !SZ.spawnBird) return; // needs game v2.0.25+
 var H = SZ.HOOKS, kit = SZ.kit, CFG = SZ.CFG;
-var W = CFG.worldSize, CX = W / 2, CZ = W / 2;
+var W = CFG.worldSize;
 var THREE = window.THREE;
 
-function isHe() { return SZ.lang() === 'he'; }
+/* ==========================================================================
+   1. Pure word helpers (no DOM, no game — unit-testable via WORDCURE_TEST)
+   ========================================================================== */
+var BUILTIN_WORDS = ['cat', 'sun', 'dog', 'fish', 'bird', 'tree', 'moon', 'star',
+  'cake', 'ball', 'book', 'happy', 'water', 'green', 'house', 'apple', 'smile',
+  'flower', 'friend', 'music', 'rainbow', 'school', 'doctor', 'zebra'];
 
-/* ---- 1. Entry button under the start button ---- */
+/* Parse a .txt word list: one word per line, trimmed, lowercased, kept only
+   when it matches /^[a-z]{2,12}$/, deduplicated, capped at 100. */
+function parseWordList(text) {
+  var out = [], seen = {};
+  var lines = String(text).split('\n');
+  for (var i = 0; i < lines.length; i++) {
+    var w = lines[i].trim().toLowerCase();
+    if (!/^[a-z]{2,12}$/.test(w)) continue;
+    if (seen[w]) continue;
+    seen[w] = true;
+    out.push(w);
+    if (out.length >= 100) break;
+  }
+  return out;
+}
+
+/* Fisher-Yates shuffle of a word's letters; nudged so the result differs
+   from the word itself whenever the word has 2+ letters. */
+function scrambleLetters(word) {
+  var a = word.split('');
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  var s = a.join('');
+  if (s === word && word.length > 1) {
+    var b = s.split(''); var tt = b[0]; b[0] = b[1]; b[1] = tt; s = b.join('');
+  }
+  return s;
+}
+
+function shuffleInPlace(a) {
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+/* Star rules (stages 2-4 only; stage 1 cannot produce mistakes or hints):
+     3 stars — zero mistakes AND zero hints used.
+     2 stars — minor mistakes/hints (anything between).
+     1 star  — "heavy help": 4 or more mistakes, or 3 or more hint uses. */
+function awardStars(mistakes, hints) {
+  if (mistakes <= 0 && hints <= 0) return 3;
+  if (mistakes >= 4 || hints >= 3) return 1;
+  return 2;
+}
+
+/* Gap count scales with word length: 1 gap for <=4 letters, 2 for 5-7, 3 for 8+. */
+function gapsForWord(word) {
+  var n = word.length;
+  return n <= 4 ? 1 : (n <= 7 ? 2 : 3);
+}
+
+/* Random distinct gap indices (sorted). rnd is injectable for tests. */
+function makeGapPlan(word, rnd) {
+  var n = gapsForWord(word), idx = [], pool = [], i;
+  for (i = 0; i < word.length; i++) pool.push(i);
+  rnd = rnd || Math.random;
+  for (var k = 0; k < n && pool.length; k++) {
+    var p = Math.floor(rnd() * pool.length);
+    idx.push(pool.splice(p, 1)[0]);
+  }
+  idx.sort(function (a, b) { return a - b; });
+  return idx;
+}
+
+/* Spaced-repetition queue: pick the least-attempted word with <3 stars that
+   no live carrier is currently holding. Returns the index, or -1 when every
+   loaded word is mastered (or the list is empty). */
+function pickWordIndex(words, carried) {
+  var best = -1, bestAtt = Infinity, i;
+  for (i = 0; i < words.length; i++) {
+    if (words[i].stars >= 3) continue;
+    if (carried && carried.indexOf(words[i].w) !== -1) continue;
+    if (words[i].attempts < bestAtt || (words[i].attempts === bestAtt && Math.random() < 0.5)) {
+      best = i; bestAtt = words[i].attempts;
+    }
+  }
+  if (best === -1) { // everything unmastered is on screen: allow a duplicate
+    for (i = 0; i < words.length; i++) {
+      if (words[i].stars >= 3) continue;
+      if (words[i].attempts < bestAtt || (words[i].attempts === bestAtt && Math.random() < 0.5)) {
+        best = i; bestAtt = words[i].attempts;
+      }
+    }
+  }
+  return best;
+}
+
+/* Decoys for stage 3: n random letters not among the correct ones. */
+function pickDecoys(correct, n) {
+  var have = {}, i;
+  for (i = 0; i < correct.length; i++) have[correct[i]] = true;
+  var pool = [];
+  for (i = 0; i < 26; i++) {
+    var ch = String.fromCharCode(97 + i);
+    if (!have[ch]) pool.push(ch);
+  }
+  shuffleInPlace(pool);
+  return pool.slice(0, n);
+}
+
+/* Spoken letter names for stage 1 ("ay", "bee", ...). */
+var LETTER_NAMES = { a: 'ay', b: 'bee', c: 'see', d: 'dee', e: 'ee', f: 'ef',
+  g: 'gee', h: 'aitch', i: 'eye', j: 'jay', k: 'kay', l: 'el', m: 'em',
+  n: 'en', o: 'oh', p: 'pee', q: 'cue', r: 'ar', s: 'ess', t: 'tee',
+  u: 'you', v: 'vee', w: 'double-you', x: 'ex', y: 'wy', z: 'zed' };
+
+function starStr(n) { var s = ''; for (var i = 0; i < 3; i++) s += i < n ? '★' : '☆'; return s; }
+
+/* ==========================================================================
+   2. Test namespace. Inert: pure helpers plus mode start/stop entry points
+   that do not require a real file upload. Defining it has no effect on
+   gameplay. Non-enumerable to stay out of the way.
+   ========================================================================== */
+Object.defineProperty(window, 'WORDCURE_TEST', {
+  enumerable: false, configurable: true, writable: false,
+  value: {
+    version: '1.0.0',
+    parseWordList: parseWordList,
+    scrambleLetters: scrambleLetters,
+    awardStars: awardStars,
+    gapsForWord: gapsForWord,
+    makeGapPlan: makeGapPlan,
+    pickWordIndex: pickWordIndex,
+    builtinWords: BUILTIN_WORDS.slice(),
+    start: function (words) { startWordCure(words); },
+    stop: function () { exitWordCure(); },
+    state: function () {
+      return {
+        on: wcOn,
+        words: WC ? WC.words.map(function (e) { return { w: e.w, stars: e.stars, attempts: e.attempts }; }) : null,
+        sessionStars: WC ? WC.sessionStars : 0,
+        best: bestSessionStars,
+        curing: !!(WC && WC.curing)
+      };
+    }
+  }
+});
+
+/* ==========================================================================
+   3. Speech. EVERY speech call in the patch goes through speak(), which
+   silently does nothing when speechSynthesis is missing or throws — the
+   mode always works without audio. English voice preferred when available.
+   ========================================================================== */
+var enVoice = null, enVoiceTried = false;
+function pickEnVoice() {
+  try {
+    if (!('speechSynthesis' in window)) return null;
+    if (enVoiceTried) return enVoice;
+    enVoiceTried = true;
+    var vs = window.speechSynthesis.getVoices() || [];
+    for (var i = 0; i < vs.length; i++) {
+      var lg = (vs[i].lang || '').toLowerCase();
+      if (lg.indexOf('en') === 0) { enVoice = vs[i]; break; }
+    }
+  } catch (e) { return null; }
+  return enVoice;
+}
+function speak(text) {
+  try {
+    if (!('speechSynthesis' in window)) return;
+    var ss = window.speechSynthesis;
+    ss.cancel();
+    var u = new SpeechSynthesisUtterance(String(text));
+    var v = pickEnVoice();
+    if (v) u.voice = v;
+    u.lang = 'en-US';
+    u.rate = 0.92; u.pitch = 1.05;
+    ss.speak(u);
+  } catch (e) { /* silent by design */ }
+}
+
+/* ==========================================================================
+   4. Patch stylesheet (injected once; English-only labels by construction —
+   applyLang() only rewrites [data-i18n] game elements, never these).
+   All tap targets >= 44px; overlays are viewport-safe down to 360px wide.
+   ========================================================================== */
+(function injectCss() {
+  var css = [
+    '.wc-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;background:rgba(8,18,38,.74);padding:10px;box-sizing:border-box}',
+    '.wc-card{background:#fffdf4;border:4px solid #2e7d32;border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,.5);width:520px;max-width:94vw;max-height:92vh;overflow-y:auto;padding:16px 16px 20px;box-sizing:border-box;text-align:center;font-family:inherit;color:#123}',
+    '.wc-head{position:relative;margin-bottom:8px}',
+    '.wc-title{font-size:24px;font-weight:800;color:#1b5e20}',
+    '.wc-stage{font-size:16px;color:#37474f;margin-top:2px}',
+    '.wc-dots{margin-top:6px}',
+    '.wc-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:#cfd8dc;margin:0 4px}',
+    '.wc-dot.done{background:#66bb6a}',
+    '.wc-dot.now{background:#ffa000;box-shadow:0 0 0 3px #ffe0b2}',
+    '.wc-x{position:absolute;top:0;right:0;border:2px solid #b0bec5;background:#fff;border-radius:10px;padding:6px 10px;font-size:14px;cursor:pointer;min-height:44px}',
+    '.wc-body{font-size:17px}',
+    '.wc-help{margin:8px 4px 12px;color:#37474f}',
+    '.wc-bigword{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 14px;min-height:64px;align-items:center}',
+    '.wc-big-letter{display:inline-flex;align-items:center;justify-content:center;min-width:48px;min-height:56px;padding:4px 8px;font-size:34px;font-weight:800;border-radius:12px;background:#eceff1;color:#b0bec5;border:3px solid #cfd8dc;transition:background .2s,transform .2s}',
+    '.wc-big-letter.lit{background:#fff9c4;color:#1a237e;border-color:#ffb300;transform:scale(1.08)}',
+    '.wc-big-letter.static{background:#e8f5e9;color:#1b5e20;border-color:#a5d6a7}',
+    '.wc-btnrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px}',
+    '.wc-btn{min-height:48px;padding:10px 18px;font-size:17px;font-weight:700;border-radius:12px;border:3px solid #2e7d32;background:#fff;color:#1b5e20;cursor:pointer}',
+    '.wc-btn.primary{background:#2e7d32;color:#fff}',
+    '.wc-btn.hint{border-color:#ef6c00;color:#e65100}',
+    '.wc-btn:active{transform:scale(.96)}',
+    '.wc-tray{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}',
+    '.wc-tile{min-width:52px;min-height:52px;padding:8px 10px;font-size:30px;font-weight:800;border-radius:12px;border:3px solid #5c6bc0;background:#e8eaf6;color:#1a237e;cursor:pointer}',
+    '.wc-tile.used{opacity:.25;cursor:default}',
+    '.wc-answer{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}',
+    '.wc-slot{display:inline-flex;align-items:center;justify-content:center;min-width:48px;min-height:56px;font-size:32px;font-weight:800;border-radius:12px;background:#fafafa;border:3px dashed #90a4ae;color:#78909c}',
+    '.wc-slot.ok{background:#e8f5e9;border:3px solid #66bb6a;color:#1b5e20}',
+    '.wc-gap{min-width:48px;min-height:56px;font-size:32px;font-weight:800;border-radius:12px;border:3px solid #ef6c00;background:#fff3e0;color:#e65100;cursor:pointer}',
+    '.wc-gap.sel{box-shadow:0 0 0 4px #ffe0b2}',
+    '.wc-gap.ok{background:#e8f5e9;border-color:#66bb6a;color:#1b5e20;cursor:default}',
+    '.wc-kb{margin:12px 0 4px}',
+    '.wc-kbrow{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:8px}',
+    '.wc-key{min-width:44px;min-height:54px;padding:6px 4px;font-size:22px;font-weight:700;border-radius:10px;border:2px solid #78909c;background:#eceff1;color:#263238;cursor:pointer}',
+    '.wc-msg{margin:10px 4px;font-size:16px;min-height:22px}',
+    '.wc-msg.ok{color:#1b5e20;font-weight:700}',
+    '.wc-msg.err{color:#c62828;font-weight:700}',
+    '.wc-file{margin:8px 0;font-size:15px;max-width:100%}',
+    '.wc-wb-btn{position:fixed;top:118px;right:10px;z-index:150;min-height:44px;padding:8px 12px;font-size:15px;font-weight:700;border-radius:12px;border:3px solid #1565c0;background:#e3f2fd;color:#0d47a1;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.35)}',
+    '.wc-wb-panel{position:fixed;top:170px;right:10px;z-index:150;width:252px;max-width:72vw;max-height:60vh;overflow-y:auto;background:#fffdf4;border:3px solid #1565c0;border-radius:14px;padding:12px;box-sizing:border-box;box-shadow:0 6px 24px rgba(0,0,0,.4);text-align:center;color:#123}',
+    '.wc-wb-title{font-size:19px;font-weight:800;color:#0d47a1}',
+    '.wc-wb-sub{font-size:14px;color:#37474f;margin:4px 0}',
+    '.wc-wb-list{margin:8px 0;max-height:30vh;overflow-y:auto}',
+    '.wc-wb-row{display:flex;justify-content:space-between;font-size:15px;padding:3px 6px;border-bottom:1px solid #e0e0e0}',
+    '.wc-wb-row.mastered{background:#e8f5e9}',
+    '.wc-confetti{position:fixed;top:-24px;width:11px;height:15px;z-index:300;pointer-events:none;animation-name:wc-fall;animation-timing-function:linear;animation-fill-mode:forwards}',
+    '@keyframes wc-fall{to{transform:translateY(112vh) rotate(680deg)}}',
+    '@keyframes wc-wiggle{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}',
+    '.wc-wiggle{animation:wc-wiggle .32s ease 2}',
+    '@keyframes wc-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}',
+    '.wc-shake{animation:wc-shake .25s ease 2}',
+    '.wc-diploma{font-size:64px;margin:6px 0}',
+    '.wc-stars-big{font-size:26px;color:#f9a825;font-weight:800}'
+  ].join('\n');
+  var st = document.createElement('style');
+  st.type = 'text/css';
+  st.appendChild(document.createTextNode(css));
+  document.head.appendChild(st);
+})();
+
+/* ==========================================================================
+   5. Small DOM helpers
+   ========================================================================== */
+function el(tag, cls, html) {
+  var d = document.createElement(tag || 'div');
+  if (cls) d.className = cls;
+  if (html !== undefined && html !== null) d.innerHTML = html;
+  return d;
+}
+function replayAnim(node, cls) {
+  if (!node) return;
+  node.classList.remove(cls);
+  void node.offsetWidth;
+  node.classList.add(cls);
+}
+function wiggle(node) { replayAnim(node, 'wc-wiggle'); } // gentle: wrong tile/option
+function shake(node) { replayAnim(node, 'wc-shake'); }   // gentle: wrong keystroke
+
+/* ==========================================================================
+   6. Session state
+   ========================================================================== */
+var wcOn = false, hooked = false, wasHe = false;
+var WC = null;              // active session (null when not playing)
+var bestSessionStars = 0;   // best star total, page lifetime (like Sukkot's best-five)
+var wcSavedDisplay = null;  // original display values of UI hidden in-mode
+
+function active() { return wcOn && WC && !WC.over; }
+
+/* ==========================================================================
+   7. Title-screen entry: "📚 Word Cure" button under #btnStart, then the
+   word-list loading panel (file upload or the built-in 24-word list).
+   ========================================================================== */
 var startBtn = document.getElementById('btnStart');
 if (!startBtn) return;
 var btn = document.createElement('button');
 btn.className = 'btn gold';
-btn.id = 'btnSukkot';
-btn.textContent = '🍋 סוכות · Sukkot';
+btn.id = 'btnWordCure';
+btn.textContent = '📚 Word Cure';
 btn.style.marginTop = '10px';
-startBtn.parentNode.insertBefore(btn, startBtn.nextSibling);
-var origRetry = document.getElementById('btnRetry').onclick;
-btn.onclick = function () { SZ.audioInit(); SZ.SFX.click(); startSukkot(); };
+startBtn.parentNode.insertBefore(btn, startBtn.nextSibling); // directly under Start
+var origRetry = document.getElementById('btnRetry').onclick; // saved for quit-to-title restore
+btn.onclick = function () { SZ.audioInit(); SZ.SFX.click(); openLoadPanel(); };
 
-/* ---- 2. Session state ---- */
-var sukkotOn = false, hooked = false;
-var SUK = null;              // active session (null when not playing)
-var sukkotScores = [];       // best-5 survival times: page lifetime, survives quit-to-title
-var sukkahGroup = null;      // the sukkah meshes
-var fsGroup = null, fsT = 0; // the waved Four Species + its timer
-var timerEl = null;
-// Endless-mode tuning (v1.0.1): the start stays calm, pressure builds slowly,
-// and only ACTIVE zombies count toward the spawn cap so waves never stop.
-var SUKKOT_SPAWN_CAP = 45;   // max simultaneous un-repented zombies (base game: CFG.spawnCap = 14)
-var SUKKOT_FIRST_WAVE = 5;   // seconds until the first wave (was 3)
-var SUKKOT_BASE_INTERVAL = 9; // spawn interval at t=0 (was 7)
+var overlayEl = null, overlayCard = null, overlayHead = null, overlayBody = null;
+function buildOverlay() {
+  removeOverlay();
+  overlayEl = el('div', 'wc-overlay');
+  overlayCard = el('div', 'wc-card');
+  overlayHead = el('div', 'wc-head');
+  overlayBody = el('div', 'wc-body');
+  overlayCard.appendChild(overlayHead);
+  overlayCard.appendChild(overlayBody);
+  overlayEl.appendChild(overlayCard);
+  document.body.appendChild(overlayEl);
+}
+function removeOverlay() {
+  if (overlayEl && overlayEl.parentNode) overlayEl.parentNode.removeChild(overlayEl);
+  overlayEl = overlayCard = overlayHead = overlayBody = null;
+}
+function showMsg(msg, ok, t) {
+  msg.className = 'wc-msg ' + (ok ? 'ok' : 'err');
+  msg.textContent = t;
+}
 
-function active() { return sukkotOn && SUK && !SUK.over; }
+function openLoadPanel() {
+  buildOverlay();
+  overlayHead.appendChild(el('div', 'wc-title', '📚 Word Cure'));
+  overlayBody.appendChild(el('p', 'wc-help',
+    'The zombies caught <b>scrambled words</b>! Load a word list and become their <b>Word Doctor</b>.'));
+  overlayBody.appendChild(el('p', 'wc-help',
+    'Choose a <b>.txt</b> file — one word per line, 2–12 English letters:'));
+  var file = document.createElement('input');
+  file.type = 'file'; file.accept = '.txt'; file.className = 'wc-file';
+  overlayBody.appendChild(file);
+  var msg = el('div', 'wc-msg');
+  overlayBody.appendChild(msg);
+  var row = el('div', 'wc-btnrow');
+  var builtin = el('button', 'wc-btn', '📖 Use the built-in list (24 words)');
+  builtin.onclick = function () { SZ.SFX.click(); beginWith(parseWordList(BUILTIN_WORDS.join('\n')), msg); };
+  var cancel = el('button', 'wc-btn', 'Cancel');
+  cancel.onclick = function () { SZ.SFX.click(); removeOverlay(); };
+  row.appendChild(builtin); row.appendChild(cancel);
+  overlayBody.appendChild(row);
+  file.onchange = function () {
+    var f = file.files && file.files[0];
+    if (!f) return;
+    var rd = new FileReader();
+    rd.onload = function () { beginWith(parseWordList(String(rd.result)), msg); };
+    rd.onerror = function () { showMsg(msg, false, 'Could not read that file — please try again.'); };
+    rd.readAsText(f);
+  };
+}
 
-function startSukkot() {
+function beginWith(words, msg) {
+  if (!words.length) {
+    showMsg(msg, false, 'Hmm, no valid words found. Use one word per line, 2–12 English letters (a–z).');
+    return;
+  }
+  var n = words.length;
+  showMsg(msg, true, n + ' word' + (n === 1 ? '' : 's') + ' loaded — ready, Doctor?');
+  var row = overlayBody.querySelector('.wc-btnrow');
+  if (row && !overlayBody.querySelector('.wc-start')) {
+    var start = el('button', 'wc-btn primary wc-start', '🩺 Start curing!');
+    start.onclick = function () { SZ.audioInit(); SZ.SFX.click(); removeOverlay(); startWordCure(words); };
+    row.appendChild(start);
+  }
+}
+
+/* ==========================================================================
+   8. Mode lifecycle: start / stop / quit-to-title / retry
+   ========================================================================== */
+function startWordCure(words) {
+  if (!words || !words.length) return;
+  removeOverlay();
+  // English-only mode: spelling is English, so force the game to English.
+  // (There is no language setter; the title button's own handler is the only
+  // switch. Restored on exit if it was Hebrew on entry. Latched on a fresh
+  // start only, so replay/retry keeps the original value.)
+  if (!wcOn) {
+    wasHe = (SZ.lang() !== 'en');
+    if (wasHe) { var bl = document.getElementById('btnLang'); if (bl) bl.click(); }
+  }
   SZ.showScreen(null);
-  SZ.startLevel(5, false); // the Yavne level
-  SUK = { t: 0, spawnT: SUKKOT_FIRST_WAVE, over: false, endReason: null,
-          sukkahHp: 120, sukkahMax: 120, sx: 0, sz: 0 };
+  SZ.startLevel(1, false); // fresh level; base banners are overridden below
   installHooks();
-  sukkotOn = true;
-  placeSukkah();
-  placePlayerNearSukkah();
-  addExtraBushes();
-  showSukkotHud();
-  kit.banner(isHe() ? '🍋 חג סוכות שמח!' : '🍋 Happy Sukkot!', 3);
-  setTimeout(function () {
-    if (active()) kit.toast(isHe()
-      ? 'הגנו על הסוכה! אל תתנו לזומבים להרוס אותה'
-      : 'Defend the sukkah! Don\'t let the zombies destroy it', 4);
-  }, 3200);
+  WC = {
+    words: words.map(function (w) { return { w: w, stars: 0, attempts: 0 }; }),
+    over: false, curing: null, sessionStars: 0, trickleT: 20
+  };
+  wcOn = true;
+  hidePowerUi();
+  buildWordBookButton();
+  var p = SZ.player();
+  for (var i = 0; i < 4; i++) spawnCarrierNear(p); // first patients, near the kid
+  SZ.kit.banner('📚 Word Cure! Walk up to a zombie to cure it with words.', 4);
   // the base game shows its "save the school" banner 4.8s after level start;
-  // in Sukkot mode it must say "save the sukkah" instead (fires just after)
+  // in Word Cure mode it must say this instead (fires just after, like Sukkot)
   setTimeout(function () {
-    if (active()) kit.banner(isHe() ? 'הצילו את הסוכה! 🍋' : 'Save the sukkah! 🍋', 3.5);
+    if (active()) SZ.kit.banner('📚 No fighting — just spelling! Get close to a zombie.', 4);
   }, 4830);
-  relabelFourSpecies(); // the shofar slot is the Four Species from the very start
+  SZ.kit.toast('Tap the 📚 Word Book to see your words', 5);
 }
 
-function exitSukkot() {
-  sukkotOn = false;
-  SUK = null;
-  removeSukkah();
-  hideFourSpecies();
-  hideSukkotHud();
-  var rb = document.getElementById('btnRetry');
-  if (rb) rb.onclick = origRetry;
-}
-
-/* ---- 3. Hook installation (once). The wrappers stay installed for the
-      page's lifetime; each one delegates to the original game function
-      whenever no sukkot session is active, so the normal game is
-      unaffected after leaving sukkot mode. ---- */
+/* Wrappers stay installed for the page's lifetime and delegate to the saved
+   original whenever no Word Cure session is active — the normal game is then
+   provably unaffected. */
 function installHooks() {
   if (hooked) return;
   hooked = true;
-  H._patchUpdateZombies = H.updateZombies;   H.updateZombies = sukkotUpdateZombies;
-  H._patchUpdateSpawner = H.updateSpawner;   H.updateSpawner = sukkotUpdateSpawner;
-  H._patchUpdateDayNight = H.updateDayNight; H.updateDayNight = sukkotUpdateDayNight;
-  H._patchUsePower = H.usePower;             H.usePower = sukkotUsePower;
-  H._patchGameOver = H.gameOver;             H.gameOver = sukkotGameOver;
-  H._patchUpdatePowerBar = H.updatePowerBar;
-  H.updatePowerBar = function () { H._patchUpdatePowerBar(); relabelFourSpecies(); };
-  // leaving to the menu / restarting the level drops sukkot mode quietly
-  document.getElementById('btnQuit').addEventListener('click', exitSukkot);
-  document.getElementById('btnRestartLevel').addEventListener('click', exitSukkot);
-  document.getElementById('btnLang').addEventListener('click', function () {
-    setTimeout(refreshSukkotLabels, 60);
-  });
+  H._wcUpdateZombies = H.updateZombies; H.updateZombies = wordCureUpdateZombies;
+  H._wcUsePower = H.usePower;           H.usePower = wordCureUsePower;
+  H._wcUseFart = H.useFart;             H.useFart = wordCureUseFart;
+  H._wcGameOver = H.gameOver;           H.gameOver = wordCureGameOver;
+  // leaving to the menu / restarting the level drops Word Cure quietly
+  document.getElementById('btnQuit').addEventListener('click', exitWordCure);
+  document.getElementById('btnRestartLevel').addEventListener('click', exitWordCure);
+  // capture phase: runs before the game's own keydown handler, so Escape/KeyP
+  // cannot resume the soft-paused world behind the open minigame overlay
+  window.addEventListener('keydown', wordCureKeyDown, true);
 }
 
-/* ---- 4. The sukkah (pretty!) ---- */
-function sukkahFabricTexture() {
-  var c = document.createElement('canvas'); c.width = 256; c.height = 256;
-  var g = c.getContext('2d');
-  g.fillStyle = '#f7f0dd'; g.fillRect(0, 0, 256, 256);
-  g.fillStyle = '#3f6fb5'; // blue stripes
-  for (var i = 0; i < 4; i++) g.fillRect(0, 22 + i * 62, 256, 13);
-  g.strokeStyle = '#3f6fb5'; g.lineWidth = 3; // a row of Stars of David
-  for (var sx = 32; sx < 256; sx += 64) {
-    g.beginPath();
-    for (var k = 0; k <= 6; k++) {
-      var a = -Math.PI / 2 + k * Math.PI / 3;
-      var px = sx + Math.cos(a) * 15, py = 128 + Math.sin(a) * 15;
-      if (k === 0) g.moveTo(px, py); else g.lineTo(px, py);
-    }
-    g.stroke();
-    g.beginPath();
-    for (var k2 = 0; k2 <= 6; k2++) {
-      var a2 = Math.PI / 2 + k2 * Math.PI / 3;
-      var px2 = sx + Math.cos(a2) * 15, py2 = 128 + Math.sin(a2) * 15;
-      if (k2 === 0) g.moveTo(px2, py2); else g.lineTo(px2, py2);
-    }
-    g.stroke();
+/* Stage-4 physical keyboard (+ Escape swallow while the minigame is open). */
+function wordCureKeyDown(e) {
+  var c = WC && WC.curing;
+  if (!c) return; // inactive: the game keeps the key
+  if (e.code === 'KeyP' || e.code === 'Escape') {
+    e.preventDefault();
+    e.stopPropagation();
+    return;
   }
-  g.fillStyle = '#c62828'; g.fillRect(0, 0, 256, 10); g.fillRect(0, 246, 256, 10); // festive border
-  return new THREE.CanvasTexture(c);
-}
-
-function buildSukkahMesh() {
-  var grp = new THREE.Group();
-  var wood = new THREE.MeshLambertMaterial({ color: 0x7a5230 });
-  var woodDark = new THREE.MeshLambertMaterial({ color: 0x5d3f24 });
-  var leaf = new THREE.MeshLambertMaterial({ color: 0x3e7c3a });
-  function box(w, h, d, mat, x, y, z) {
-    var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-    m.position.set(x, y, z); grp.add(m); return m;
-  }
-  box(7.4, 0.25, 6.4, woodDark, 0, 0.13, 0); // wooden deck
-  var px = 3.3, pz = 2.8; // four corner posts
-  [[-px, -pz], [px, -pz], [-px, pz], [px, pz]].forEach(function (p) {
-    var post = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.19, 3.4, 8), wood);
-    post.position.set(p[0], 1.95, p[1]); grp.add(post);
-  });
-  var fabric = new THREE.MeshLambertMaterial({ map: sukkahFabricTexture(), side: THREE.DoubleSide });
-  var back = new THREE.Mesh(new THREE.PlaneGeometry(6.6, 2.9), fabric); // back wall
-  back.position.set(0, 1.95, -2.8); grp.add(back);
-  [-1, 1].forEach(function (s) { // side walls (front stays open)
-    var wall = new THREE.Mesh(new THREE.PlaneGeometry(5.6, 2.9), fabric);
-    wall.rotation.y = Math.PI / 2;
-    wall.position.set(s * 3.3, 1.95, 0); grp.add(wall);
-  });
-  for (var bi = 0; bi < 9; bi++) { // sechach: beams + palm-leaf strips
-    var bz = -2.8 + bi * 0.7;
-    box(7.2, 0.12, 0.5, wood, 0, 3.62, bz);
-    var strip = box(7.0, 0.07, 0.45, leaf, (bi % 2 ? 0.15 : -0.15), 3.72, bz + 0.05);
-    strip.rotation.y = (bi % 2 ? 1 : -1) * 0.04;
-  }
-  box(2.4, 0.12, 1.2, new THREE.MeshLambertMaterial({ color: 0xf5f0e2 }), 0, 1.05, -0.6); // table + cloth
-  [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (l) {
-    box(0.12, 1.0, 0.12, woodDark, l[0] * 1.05, 0.55, -0.6 + l[1] * 0.5);
-  });
-  box(2.4, 0.35, 0.5, wood, 0, 0.42, 0.9);   // benches
-  box(2.4, 0.35, 0.5, wood, 0, 0.42, -2.0);
-  var chainColors = [0xc62828, 0xf9a825, 0x2e7d32, 0x1565c0, 0x6a1b9a]; // paper chain across the front
-  for (var ci = 0; ci < 13; ci++) {
-    var t = ci / 12;
-    var link = box(0.28, 0.28, 0.06,
-      new THREE.MeshLambertMaterial({ color: chainColors[ci % chainColors.length] }),
-      -3 + t * 6, 3.0 - Math.sin(t * Math.PI) * 0.55, 2.75);
-    link.rotation.z = t * 1.2;
-  }
-  var lamp = new THREE.Mesh(new THREE.SphereGeometry(0.16, 10, 10), // warm hanging lantern
-    new THREE.MeshBasicMaterial({ color: 0xffe082 }));
-  lamp.position.set(0, 3.1, 0); grp.add(lamp);
-  var pl = new THREE.PointLight(0xffd54f, 0.7, 11);
-  pl.position.set(0, 2.9, 0); grp.add(pl);
-  var sign = kit.textMesh('🍋 ' + (isHe() ? 'סוכה' : 'Sukkah'), 3.4, { size: 64 }); // entrance sign
-  sign.position.set(0, 4.6, 2.9); grp.add(sign);
-  return grp;
-}
-
-function placeSukkah() {
-  removeSukkah();
-  var x = CX, z = CZ + 16, r = 0; // middle of the schoolyard, in front of the school
-  while (kit.isBlocked(x, z, 4) && r < 24) { r += 2; x = CX + r; }
-  SUK.sx = x; SUK.sz = z;
-  var y = kit.groundHeight(x, z);
-  sukkahGroup = buildSukkahMesh();
-  sukkahGroup.position.set(x, y, z);
-  kit.scene().add(sukkahGroup);
-  kit.addObstacle(x, z, 7.4, 6.4, 'sukkah'); // the kid walks around it
-  kit.spawnBubble(x, y + 5.4, z, isHe() ? '🍋 חג סוכות שמח!' : '🍋 Happy Sukkot!', '#fff8d6', 4, 4);
-}
-
-function removeSukkah() {
-  if (sukkahGroup) {
-    kit.scene().remove(sukkahGroup);
-    sukkahGroup = null;
-    var obs = SZ.obstacles(); // drop our obstacle again
-    for (var i = obs.length - 1; i >= 0; i--)
-      if (obs[i].tag === 'sukkah') obs.splice(i, 1);
-  }
-}
-
-function damageSukkah(dmg, x, z) {
-  if (!SUK || SUK.over) return;
-  SUK.sukkahHp = Math.max(0, SUK.sukkahHp - dmg);
-  kit.spawnBurst(x, kit.groundHeight(x, z) + 2, z, 0xd7a86e, 6, 2, 0.2, 0.6, 2); // wood chips
-  SZ.SFX.hit ? SZ.SFX.hit() : null;
-  updateSukkahHud();
-  if (SUK.sukkahHp <= 0) { SUK.endReason = 'sukkah'; H.gameOver(); } // the game ends when the sukkah falls
-}
-
-/* The kid starts a short walk from the sukkah, facing it, on clear ground. */
-function placePlayerNearSukkah() {
-  var p = SZ.player();
-  if (!p) return;
-  for (var k = 0; k < 12; k++) {
-    var a = Math.PI / 2 + (k / 12) * Math.PI * 2; // start south of the sukkah, sweep around
-    var x = kit.clamp(SUK.sx + Math.cos(a) * 12, 4, W - 4);
-    var z = kit.clamp(SUK.sz + Math.sin(a) * 12, 4, W - 4);
-    if (!kit.isBlocked(x, z, 1)) {
-      p.pos.set(x, kit.groundHeight(x, z) + 1, z);
-      p.yaw = Math.atan2(SUK.sx - x, SUK.sz - z);
-      break;
+  if (c.stage === 4 && !c.done) {
+    var k = e.key;
+    if (k && k.length === 1 && /[a-zA-Z]/.test(k)) {
+      e.preventDefault();
+      typeLetter4(k.toLowerCase());
     }
   }
 }
 
-/* ---- 5. Zombie AI: march on the sukkah (fart/song redirects to the kid) ----
-   Design note: the base game's rabbi "sit and learn" is deliberately NOT
-   applied here. In this endless mode the sukkah must stay threatened —
-   letting attackers sit out the fight around the rabbi would stall the
-   whole premise. Card earning near the rabbi still works (it is
-   distance-based in the base updateRabbi, which keeps running). */
-function sukkotUpdateZombies(dt) {
-  if (!active()) return H._patchUpdateZombies(dt);
+function exitWordCure() {
+  if (WC && WC.curing) closeCure();
+  WC = null;
+  wcOn = false;
+  var zombies = SZ.zombies();
+  for (var i = 0; i < zombies.length; i++) removeBubble(zombies[i]);
+  removeOverlay();
+  removeWordBook();
+  restorePowerUi();
+  var rb = document.getElementById('btnRetry');
+  if (rb) rb.onclick = origRetry;
+  if (wasHe) { // back to the language we found
+    var bl = document.getElementById('btnLang');
+    if (bl) bl.click();
+    wasHe = false;
+  }
+  // never leave the world frozen behind us
+  if (SZ.G && SZ.G.state === 'paused') SZ.G.state = 'playing';
+}
+
+function quitToTitle() {
+  exitWordCure();
+  SZ.showScreen('titleScreen');
+  if (SZ.G) SZ.G.state = 'title';
+}
+
+/* ==========================================================================
+   9. Power guards. DESIGN CHOICE (per the integration guide §g): block +
+   hide. The chokepoints are H.usePower (mouse click, touch #btnPower, and
+   KeyF all route through it) and H.useFart (KeyX + touch #btnFart). Blocking
+   here — rather than filtering inside damageZombie, which is not hookable —
+   keeps base-game powers from curing word-carrying zombies for free (a
+   single tiferet blast repents EVERY zombie in the level and would bypass the
+   whole spelling minigame). Hiding #powerbar and the touch buttons is
+   cosmetic on top of the real guard; both are restored on exit.
+   ========================================================================== */
+var wcHiddenIds = ['powerbar', 'btnPower', 'btnSwitch', 'btnFart', 'fartHud', 'btnPause', 'btnLang'];
+function hidePowerUi() {
+  if (wcSavedDisplay) return;
+  wcSavedDisplay = {};
+  for (var i = 0; i < wcHiddenIds.length; i++) {
+    var n = document.getElementById(wcHiddenIds[i]);
+    if (n) { wcSavedDisplay[wcHiddenIds[i]] = n.style.display; n.style.display = 'none'; }
+  }
+}
+function restorePowerUi() {
+  if (!wcSavedDisplay) return;
+  for (var k in wcSavedDisplay) {
+    var n = document.getElementById(k);
+    if (n) n.style.display = wcSavedDisplay[k];
+  }
+  wcSavedDisplay = null;
+}
+
+function wordCureUsePower() {
+  if (active()) { SZ.kit.toast('📚 No powers in Word Cure — use words!', 2); return; }
+  H._wcUsePower();
+}
+function wordCureUseFart() {
+  if (active()) { SZ.kit.toast('📚 No powers in Word Cure — use words!', 2); return; }
+  H._wcUseFart();
+}
+
+/* Game over: show this visit's stars, retry restarts Word Cure fresh. */
+function wordCureGameOver() {
+  if (!active()) return H._wcGameOver();
+  WC.over = true;
+  if (WC.curing) closeCure();
+  H._wcGameOver(); // sets state/screens first, like the Sukkot template
+  var retryWords = WC.words.map(function (e) { return e.w; });
+  document.getElementById('overTitle').textContent = '📚 Word Cure — Game over!';
+  document.getElementById('overSub').innerHTML =
+    '<div style="font-size:20px;margin:6px 0">You earned <b>★' + WC.sessionStars + '</b> this visit</div>' +
+    '<div style="font-size:15px;opacity:0.9">Best stars (while the game is open): <b>★' + bestSessionStars + '</b></div>';
+  var rb = document.getElementById('btnRetry');
+  rb.textContent = '📚 Cure again';
+  rb.onclick = function () { SZ.SFX.click(); startWordCure(retryWords); };
+  removeWordBook(); // rebuilt on retry
+}
+
+/* ==========================================================================
+   10. Word-carrying zombies + floating scrambled-word bubbles.
+   Each zombie gets zb.wordCure = { word, scrambled, bubble, cured, coolT }.
+   The bubble is a THREE.Sprite (always faces the camera) drawn on a canvas:
+   the scrambled letters as separate tiles. Sprite chosen over a DOM overlay
+   so no camera projection is needed.
+   ========================================================================== */
+function roundRectPath(g, x, y, w, h, r) {
+  g.beginPath();
+  g.moveTo(x + r, y);
+  g.arcTo(x + w, y, x + w, y + h, r);
+  g.arcTo(x + w, y + h, x, y + h, r);
+  g.arcTo(x, y + h, x, y, r);
+  g.arcTo(x, y, x + w, y, r);
+  g.closePath();
+}
+
+function makeBubbleSprite(scrambled) {
+  var n = scrambled.length;
+  var tile = 56, pad = 26, cw = pad * 2 + n * tile, chh = 148;
+  var cv = document.createElement('canvas');
+  cv.width = cw; cv.height = chh;
+  var g = cv.getContext('2d');
+  g.fillStyle = 'rgba(255,255,255,0.96)';
+  roundRectPath(g, 4, 4, cw - 8, chh - 8, 32); g.fill();
+  g.lineWidth = 7; g.strokeStyle = '#1565c0'; g.stroke();
+  g.fillStyle = '#1565c0';
+  g.font = 'bold 30px Arial'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('📚', cw / 2, 26);
+  var cols = ['#e3f2fd', '#fff3e0', '#e8f5e9', '#fce4ec'];
+  for (var i = 0; i < n; i++) {
+    var x = pad + i * tile;
+    g.fillStyle = cols[i % cols.length];
+    roundRectPath(g, x + 4, 52, tile - 8, tile - 8, 12); g.fill();
+    g.lineWidth = 3; g.strokeStyle = '#5c6bc0'; g.stroke();
+    g.fillStyle = '#1a237e';
+    g.font = 'bold 38px Arial';
+    g.fillText(scrambled[i].toUpperCase(), x + tile / 2, 52 + (tile - 8) / 2 + 2);
+  }
+  var tex = new THREE.CanvasTexture(cv);
+  tex.minFilter = THREE.LinearFilter;
+  var sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true }));
+  var baseW = 4.4;
+  sp.scale.set(baseW, baseW * chh / cw, 1);
+  return sp;
+}
+
+function attachBubble(zb) {
+  removeBubble(zb);
+  var sp = makeBubbleSprite(zb.wordCure.scrambled);
+  if (zb.giant) sp.scale.multiplyScalar(1.35);
+  zb.wordCure.bubble = sp;
+  kit.scene().add(sp);
+  positionBubble(zb);
+}
+function positionBubble(zb) {
+  var sp = zb.wordCure && zb.wordCure.bubble;
+  if (!sp) return;
+  var s = zb.rig.s;
+  sp.position.set(zb.pos.x, zb.pos.y + (zb.giant ? 5.8 : 3.4) * s, zb.pos.z);
+}
+function removeBubble(zb) {
+  var wc = zb.wordCure;
+  if (wc && wc.bubble) {
+    kit.scene().remove(wc.bubble);
+    if (wc.bubble.material.map) wc.bubble.material.map.dispose();
+    wc.bubble.material.dispose();
+    wc.bubble = null;
+  }
+}
+
+function carriedWords() {
+  var out = [], zs = SZ.zombies();
+  for (var i = 0; i < zs.length; i++) {
+    var z = zs[i];
+    if (!z.gone && !z.repented && z.wordCure && z.wordCure.word) out.push(z.wordCure.word);
+  }
+  return out;
+}
+
+function assignWordTo(zb) {
+  if (!WC) return false;
+  var idx = pickWordIndex(WC.words, carriedWords());
+  if (idx < 0) return false;
+  var e = WC.words[idx];
+  e.attempts++;
+  zb.wordCure = { word: e.w, scrambled: scrambleLetters(e.w), bubble: null, cured: false, coolT: 0 };
+  attachBubble(zb);
+  return true;
+}
+
+function spawnCarrierNear(player) {
+  if (!player || !active()) return;
+  for (var k = 0; k < 10; k++) {
+    var a = Math.random() * Math.PI * 2, r = 9 + Math.random() * 7;
+    var x = kit.clamp(player.pos.x + Math.cos(a) * r, 4, W - 4);
+    var z = kit.clamp(player.pos.z + Math.sin(a) * r, 4, W - 4);
+    if (kit.isBlocked(x, z, 1)) continue;
+    assignWordTo(SZ.spawnZombie(x, z, false));
+    return;
+  }
+}
+
+/* ==========================================================================
+   11. The per-frame zombie update for Word Cure mode.
+   - Word carriers are DOCILE: they shamble toward the kid because they want
+     to be cured, and never attack (kid-friendly mode; also keeps the
+     minigame readable). The base "sit and learn" rabbi behavior is
+     intentionally not applied — same rationale as the Sukkot patch.
+   - Proximity (on foot or in the van) opens the cure minigame and
+     soft-pauses the world.
+   - Cured neighbors parade behind the van (manual steering each frame).
+   ========================================================================== */
+function wordCureUpdateZombies(dt) {
+  if (!active()) return H._wcUpdateZombies(dt);
   var zombies = SZ.zombies(), player = SZ.player();
   if (!player) return;
   var van = SZ.van();
+  // daytime trickle: the base spawner only works at night, so keep a few
+  // carriers around while the sun is up
+  WC.trickleT -= dt;
+  if (WC.trickleT <= 0) {
+    WC.trickleT = 18;
+    var carriers = 0, ci;
+    for (ci = 0; ci < zombies.length; ci++) {
+      var c0 = zombies[ci];
+      if (!c0.gone && !c0.repented && c0.wordCure && c0.wordCure.word) carriers++;
+    }
+    if (carriers < 3 && !WC.curing) spawnCarrierNear(player);
+  }
+  var fIdx = 0;
   for (var i = 0; i < zombies.length; i++) {
     var zb = zombies[i];
-    if (zb.gone) continue;
+    if (zb.gone) { removeBubble(zb); continue; }
+    if (!zb.wordCure) {
+      if (!zb.repented && !assignWordTo(zb))
+        zb.wordCure = { word: null, cured: false, bubble: null, coolT: 0 };
+      else if (zb.repented)
+        zb.wordCure = { word: null, cured: false, bubble: null, coolT: 0 };
+    }
     var s = zb.rig.s;
-    var dancing = SZ.vanMusicDancing(zb); // the van's song still makes them dance
     if (zb.repented) {
-      if (dancing) {
-        zb.danceT += dt * 10;
-        var dp = zb.danceT;
-        zb.rig.bodyG.rotation.x = 0.15 + Math.sin(dp) * 0.12;
-        zb.rig.group.position.set(zb.pos.x, zb.pos.y + Math.abs(Math.sin(dp)) * 0.35 * s, zb.pos.z);
-        zb.rig.group.rotation.y = zb.yaw;
-        zb.rig.armL.rotation.x = -2.5 + Math.sin(dp) * 0.35;
-        zb.rig.armR.rotation.x = -2.5 - Math.sin(dp) * 0.35;
-      } else {
-        zb.davenT += dt * 2.2; // davening (Amidah bow), same as the base game
-        var bow = Math.max(0, Math.sin(zb.davenT));
-        zb.rig.bodyG.rotation.x = bow * 0.55;
-        zb.rig.group.position.copy(zb.pos);
-        zb.rig.armL.rotation.x = 0.15; zb.rig.armR.rotation.x = 0.15;
-      }
+      if (zb.wordCure.cured) paradeStep(zb, fIdx++, van, player, dt);
+      else davenCopy(zb, dt); // defensive: repented by some path we did not cure
       continue;
     }
-    zb.atkCd = Math.max(0, zb.atkCd - dt);
-    // the sukkah is the goal — unless a fart/song is pulling them to the kid
-    var boosted = (zb.fartBoostT || 0) > 0;
-    var gx = dancing ? van.pos.x : (boosted ? player.pos.x : SUK.sx);
-    var gz = dancing ? van.pos.z : (boosted ? player.pos.z : SUK.sz);
+    var wc = zb.wordCure;
+    if (wc.coolT > 0) wc.coolT -= dt;
+    var dancing = SZ.vanMusicDancing(zb); // the van's song still delights them
+    var gx = dancing ? van.pos.x : player.pos.x;
+    var gz = dancing ? van.pos.z : player.pos.z;
     var dx = gx - zb.pos.x, dz = gz - zb.pos.z;
     var gd = Math.hypot(dx, dz);
-    // hold position at the sukkah walls instead of marching into the mesh
-    var atSukkah = !dancing && !boosted && gd < 4.4;
-    if (gd > 0.01 && !atSukkah) {
+    if (gd > 2.6 && gd > 0.01) {
       var want = Math.atan2(dx, dz);
       zb.yaw += kit.angDiff(want, zb.yaw) * Math.min(1, dt * 6);
-      var sp = zb.speed; // full stride under the holiday sun
-      zb.fartBoostT = Math.max(0, (zb.fartBoostT || 0) - dt);
-      if (zb.fartBoostT > 0) sp *= 1.6; // fart/song hurry, as usual
+      var sp = zb.speed * 0.5; // gentle pace: they come to be cured, not to chase
       zb.pos.x += Math.sin(zb.yaw) * sp * dt;
       zb.pos.z += Math.cos(zb.yaw) * sp * dt;
     }
@@ -982,26 +702,10 @@ function sukkotUpdateZombies(dt) {
     zb.pos.y = kit.groundHeight(zb.pos.x, zb.pos.z);
     for (var j = 0; j < zombies.length; j++) { // separation
       if (j === i) continue;
-      var o = zombies[j]; if (o.repented || o.gone) continue;
+      var o = zombies[j]; if (o.gone) continue;
       var ox = zb.pos.x - o.pos.x, oz = zb.pos.z - o.pos.z;
       var od = Math.hypot(ox, oz);
       if (od > 0.01 && od < 1.1) { zb.pos.x += (ox / od) * dt * 2; zb.pos.z += (oz / od) * dt * 2; }
-    }
-    var acted = false;
-    // smash the sukkah! stop at the walls (half-extent ~3.7) instead of
-    // walking into the mesh, then swing from just outside
-    var sd = kit.dist2D(zb.pos.x, zb.pos.z, SUK.sx, SUK.sz);
-    if (sd < 4.4 && zb.atkCd <= 0 && SUK.sukkahHp > 0) {
-      zb.atkCd = 1.1;
-      zb.rig.armL.rotation.x = -2.2; zb.rig.armR.rotation.x = -2.2;
-      damageSukkah(zb.dmg, zb.pos.x, zb.pos.z);
-      acted = true;
-    }
-    var pd = kit.dist2D(zb.pos.x, zb.pos.z, player.pos.x, player.pos.z); // bump the kid, as usual
-    if (!acted && pd < 1.9 + (SZ.inVan() ? 1.2 : 0) && zb.atkCd <= 0 && player.hp > 0) {
-      zb.atkCd = 1.1;
-      zb.rig.armL.rotation.x = -2.2; zb.rig.armR.rotation.x = -2.2;
-      SZ.hurtPlayer(zb.dmg, zb.pos.x, zb.pos.z);
     }
     zb.walkT += dt * 7; // walk animation
     var sw = Math.sin(zb.walkT) * 0.5;
@@ -1012,221 +716,502 @@ function sukkotUpdateZombies(dt) {
     zb.rig.group.rotation.y = zb.yaw;
     zb.rig.group.position.y = zb.pos.y + Math.abs(Math.sin(zb.walkT)) * 0.08 * s;
     if (zb.flashT > 0) zb.flashT -= dt;
-  }
-}
-
-/* ---- 6. Spawner: endless waves from the edges, ever harder ---- */
-function spawnSukkotWave(n) {
-  var baseA = Math.random() * Math.PI * 2;
-  for (var i = 0; i < n; i++) {
-    var a = baseA + (i / n) * Math.PI * 2 + (Math.random() - 0.5) * 0.6; // spread out: different spots
-    var R = 74 + Math.random() * 10; // near the world edges, always far away
-    var x = kit.clamp(CX + Math.cos(a) * R, 4, W - 4);
-    var z = kit.clamp(CZ + Math.sin(a) * R, 4, W - 4);
-    if (kit.isBlocked(x, z, 1)) x = kit.clamp(x + 6, 4, W - 4);
-    SZ.spawnZombie(x, z, false);
-  }
-}
-
-function sukkotUpdateSpawner(dt) {
-  if (!active()) return H._patchUpdateSpawner(dt);
-  SUK.t += dt;
-  updateSukkotTimer();
-  if (fsGroup) { // the waved Four Species follow the kid
-    fsT -= dt;
-    var p0 = SZ.player();
-    if (p0) {
-      fsGroup.position.set(p0.pos.x + Math.sin(p0.yaw) * 0.8,
-        p0.pos.y + 1.8 + Math.sin(fsT * 10) * 0.15, p0.pos.z + Math.cos(p0.yaw) * 0.8);
-      fsGroup.rotation.y = p0.yaw;
-      fsGroup.rotation.z = Math.sin(fsT * 12) * 0.55; // waving!
+    if (wc.bubble) positionBubble(zb);
+    // proximity (on foot or in the van) opens the cure minigame
+    if (!WC.curing && wc.word && wc.coolT <= 0) {
+      var pd = kit.dist2D(zb.pos.x, zb.pos.z, player.pos.x, player.pos.z);
+      if (pd < (SZ.inVan() ? 7 : 5.5)) openCure(zb);
     }
-    if (fsT <= 0) hideFourSpecies();
-  }
-  if (Math.random() < dt / 16) SZ.spawnBird(); // more birds than usual
-  SUK.spawnT -= dt;
-  if (SUK.spawnT <= 0) {
-    var t = SUK.t;
-    // gentle ramp (v1.0.1): the start stays calm, pressure builds slowly —
-    // and it never fully stops (see the active-only cap below)
-    var batch = Math.min(6, 1 + Math.floor(t / 45)); // more zombies at once as time passes
-    SUK.spawnT = Math.max(3, SUKKOT_BASE_INTERVAL - t / 40); // ...and more often
-    // endless mode: only ACTIVE zombies count toward the cap, like the base
-    // game's CFG.spawnCap. Repented zombies stay praying where they are and
-    // never block new waves, so the game can in theory go on forever.
-    var alive = 0, horde = SZ.zombies();
-    for (var ai = 0; ai < horde.length; ai++) if (!horde[ai].repented && !horde[ai].gone) alive++;
-    if (alive < SUKKOT_SPAWN_CAP) spawnSukkotWave(batch);
-    else SUK.spawnT = 2; // at the cap: breathe, then try again soon
   }
 }
 
-/* ---- 7. Permanent daytime ---- */
-function sukkotUpdateDayNight(dt) {
-  if (!active()) return H._patchUpdateDayNight(dt);
-  // freeze the sun at a pleasant mid-morning instead of resetting phaseT:
-  // the base function advances phaseT by dt, but we overwrite it every
-  // frame, so the sky never drifts and never teleports at the day's end
-  SZ.G.phaseT = CFG.dayLength * 0.35;
-  H._patchUpdateDayNight(dt);
+/* The parade: cured neighbors follow the van (or the kid on foot) in a tidy
+   formation. Manual steering each frame — not vanMusicDancing — so the
+   formation holds whether or not the van's song is playing. */
+function paradeStep(zb, idx, van, player, dt) {
+  var s = zb.rig.s;
+  var lx = player.pos.x, lz = player.pos.z, lyaw = player.yaw;
+  if (van) { lx = van.pos.x; lz = van.pos.z; lyaw = van.yaw; }
+  var back = 3.5 + idx * 2.0;
+  var side = (idx % 2 === 0 ? 1 : -1) * (1.1 + Math.floor(idx / 2) * 0.5);
+  var fx = Math.sin(lyaw), fz = Math.cos(lyaw);
+  var tx = lx - fx * back + fz * side;
+  var tz = lz - fz * back - fx * side;
+  var dx = tx - zb.pos.x, dz = tz - zb.pos.z;
+  var d = Math.hypot(dx, dz);
+  if (d > 1.4) {
+    var want = Math.atan2(dx, dz);
+    zb.yaw += kit.angDiff(want, zb.yaw) * Math.min(1, dt * 6);
+    var sp = Math.min(zb.speed * 1.1, d * 2);
+    zb.pos.x += Math.sin(zb.yaw) * sp * dt;
+    zb.pos.z += Math.cos(zb.yaw) * sp * dt;
+    zb.walkT += dt * 8;
+    var sw = Math.sin(zb.walkT) * 0.45;
+    zb.rig.legL.rotation.x = sw; zb.rig.legR.rotation.x = -sw;
+    zb.rig.armL.rotation.x = -0.6 + sw * 0.3; zb.rig.armR.rotation.x = -0.6 - sw * 0.3; // happy march
+  } else {
+    zb.davenT += dt * 3; // arrived: gentle happy bounce in formation
+    zb.rig.armL.rotation.x = -0.6; zb.rig.armR.rotation.x = -0.6;
+    zb.rig.group.position.set(zb.pos.x, zb.pos.y + Math.abs(Math.sin(zb.davenT)) * 0.12 * s, zb.pos.z);
+    zb.rig.group.rotation.y = zb.yaw;
+    return;
+  }
+  zb.pos.x = kit.clamp(zb.pos.x, 2, W - 2); zb.pos.z = kit.clamp(zb.pos.z, 2, W - 2);
+  zb.pos.y = kit.groundHeight(zb.pos.x, zb.pos.z);
+  zb.rig.group.position.copy(zb.pos);
+  zb.rig.group.rotation.y = zb.yaw;
+  zb.rig.group.position.y = zb.pos.y + Math.abs(Math.sin(zb.walkT)) * 0.08 * s;
 }
 
-/* ---- 8. The Four Species (same mechanics as the shofar) ---- */
-function sukkotUsePower() {
-  var p = SZ.player();
-  if (active() && p && p.power === 'shofar') { fourSpeciesBlast(); return; }
-  H._patchUsePower();
+/* Base-game davening (Amidah bow), copied for repented zombies we did not cure. */
+function davenCopy(zb, dt) {
+  zb.davenT += dt * 2.2;
+  var bow = Math.max(0, Math.sin(zb.davenT));
+  zb.rig.bodyG.rotation.x = bow * 0.55;
+  zb.rig.group.position.copy(zb.pos);
+  zb.rig.armL.rotation.x = 0.15; zb.rig.armR.rotation.x = 0.15;
 }
 
-function showFourSpecies(p) {
-  hideFourSpecies();
-  var g = new THREE.Group();
-  var green = new THREE.MeshLambertMaterial({ color: 0x2e7d32 });
-  var lulav = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.06, 1.2, 6), green); // lulav
-  var etrog = new THREE.Mesh(new THREE.SphereGeometry(0.17, 10, 10), // etrog
-    new THREE.MeshLambertMaterial({ color: 0xf9d616 }));
-  etrog.position.set(0.3, -0.25, 0.1);
-  var hadas = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.9, 0.1), green); // hadasim
-  hadas.position.set(-0.18, 0.05, 0);
-  var arava = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.8, 0.08), // aravot
-    new THREE.MeshLambertMaterial({ color: 0x66a852 }));
-  arava.position.set(0.18, 0.0, -0.05);
-  g.add(lulav); g.add(etrog); g.add(hadas); g.add(arava);
-  g.position.set(p.pos.x + Math.sin(p.yaw) * 0.8, p.pos.y + 1.8, p.pos.z + Math.cos(p.yaw) * 0.8);
-  kit.scene().add(g);
-  fsGroup = g; fsT = 1.4;
+/* ==========================================================================
+   12. The cure minigame: 4 gentle stages, no timers, no punishment.
+   Opening soft-pauses the world: frame() renders every frame but only calls
+   step() while G.state === 'playing' (v20/game.js), so zombies freeze behind
+   the modal while the DOM minigame stays fully interactive.
+   ========================================================================== */
+function setStageHead(word, stage, title) {
+  var dots = '';
+  for (var i = 1; i <= 4; i++)
+    dots += '<span class="wc-dot' + (i < stage ? ' done' : (i === stage ? ' now' : '')) + '"></span>';
+  overlayHead.innerHTML = '';
+  overlayHead.appendChild(el('div', 'wc-title', '📚 Cure: <b>' + word.toUpperCase() + '</b>'));
+  overlayHead.appendChild(el('div', 'wc-stage', 'Stage ' + stage + ' of 4: ' + title));
+  overlayHead.appendChild(el('div', 'wc-dots', dots));
+  var x = el('button', 'wc-x', '✕ Leave');
+  x.onclick = function () { SZ.SFX.click(); leaveCure(); };
+  overlayHead.appendChild(x);
 }
-function hideFourSpecies() {
-  if (fsGroup) {
-    kit.scene().remove(fsGroup);
-    // endless mode fires many blasts: release the per-blast geometries and
-    // materials instead of leaking GPU memory
-    fsGroup.traverse(function (o) {
-      if (o.geometry) o.geometry.dispose();
-      if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(function (m) { m.dispose(); });
-    });
-    fsGroup = null;
+
+function openCure(zb) {
+  if (!active() || WC.curing || !zb.wordCure || !zb.wordCure.word || zb.repented || zb.gone) return;
+  // pointer lock would hide the cursor over the modal on desktop — release it
+  if (document.pointerLockElement) { try { document.exitPointerLock(); } catch (e) {} }
+  WC.curing = {
+    zb: zb, word: zb.wordCure.word, scrambled: zb.wordCure.scrambled,
+    stage: 1, mistakes: 0, hints: 0, timers: [], done: false,
+    idx4: 0, slots4: null
+  };
+  if (zb.wordCure.bubble) zb.wordCure.bubble.visible = false;
+  if (SZ.G) SZ.G.state = 'paused'; // soft-pause (see note above)
+  SZ.showScreen(null);             // keeps the HUD visible while paused
+  buildOverlay();
+  renderStage1();
+  SZ.SFX.click();
+}
+
+function closeCure() {
+  var c = WC && WC.curing;
+  if (c) {
+    for (var i = 0; i < c.timers.length; i++) clearTimeout(c.timers[i]);
+    c.timers.length = 0;
+    if (c.zb && c.zb.wordCure && c.zb.wordCure.bubble) c.zb.wordCure.bubble.visible = true;
+  }
+  if (WC) WC.curing = null;
+  removeOverlay();
+  if (active() && SZ.G && SZ.G.state === 'paused') SZ.G.state = 'playing';
+}
+
+/* Leaving without finishing: the zombie keeps its word (it can be cured
+   later), gets a gentle push away plus a cooldown so the minigame does not
+   instantly reopen. */
+function leaveCure() {
+  var c = WC && WC.curing;
+  if (c && c.zb && !c.zb.gone) {
+    var p = SZ.player();
+    if (p) {
+      var dx = c.zb.pos.x - p.pos.x, dz = c.zb.pos.z - p.pos.z;
+      var dd = Math.hypot(dx, dz) || 1;
+      c.zb.pos.x = kit.clamp(c.zb.pos.x + dx / dd * 6, 2, W - 2);
+      c.zb.pos.z = kit.clamp(c.zb.pos.z + dz / dd * 6, 2, W - 2);
+    }
+    if (c.zb.wordCure) c.zb.wordCure.coolT = 4;
+  }
+  SZ.kit.toast('No rush — the word will wait for you. 📚', 3);
+  closeCure();
+}
+
+/* ---- Stage 1: See & Hear. The word spelled correctly; letters light up one
+   by one while each letter NAME is spoken, then the whole word. Tapping
+   "Listen" first keeps speechSynthesis inside a user gesture (autoplay
+   policy). No mistakes or hints are possible here. ---- */
+function renderStage1() {
+  var c = WC.curing; if (!c || !overlayBody) return;
+  setStageHead(c.word, 1, 'See & Hear');
+  overlayBody.innerHTML = '';
+  overlayBody.appendChild(el('p', 'wc-help', 'Watch and listen, Doctor. Tap <b>🔊 Listen</b> to hear the word.'));
+  var row = el('div', 'wc-bigword');
+  var spans = [];
+  for (var i = 0; i < c.word.length; i++) {
+    var s = el('span', 'wc-big-letter', c.word[i].toUpperCase());
+    row.appendChild(s); spans.push(s);
+  }
+  overlayBody.appendChild(row);
+  var btnRow = el('div', 'wc-btnrow');
+  var listen = el('button', 'wc-btn primary', '🔊 Listen');
+  var again = el('button', 'wc-btn', '🔊 Hear it again');
+  var next = el('button', 'wc-btn primary', 'Next →');
+  again.style.display = 'none'; next.style.display = 'none';
+  btnRow.appendChild(listen); btnRow.appendChild(again); btnRow.appendChild(next);
+  overlayBody.appendChild(btnRow);
+  function live() { return WC && WC.curing === c && c.stage === 1 && !c.done; }
+  function play() {
+    if (!live()) return;
+    listen.style.display = 'none'; again.style.display = 'none'; next.style.display = 'none';
+    for (var k = 0; k < spans.length; k++) spans[k].classList.remove('lit');
+    var i = 0;
+    (function stepFn() {
+      if (!live()) return;
+      if (i < spans.length) {
+        spans[i].classList.add('lit');
+        speak(LETTER_NAMES[c.word[i]]);
+        i++;
+        c.timers.push(setTimeout(stepFn, 520));
+      } else {
+        c.timers.push(setTimeout(function () {
+          if (!live()) return;
+          speak(c.word);
+          again.style.display = ''; next.style.display = '';
+        }, 650));
+      }
+    })();
+  }
+  listen.onclick = function () { SZ.audioInit(); SZ.SFX.click(); play(); };
+  again.onclick = function () { SZ.SFX.click(); play(); };
+  next.onclick = function () { SZ.SFX.click(); c.stage = 2; renderStage2(); };
+}
+
+/* ---- Stage 2: Unscramble. Big tappable tiles; wrong tiles wiggle gently,
+   never punished. ---- */
+function renderStage2() {
+  var c = WC.curing; if (!c || !overlayBody) return;
+  setStageHead(c.word, 2, 'Unscramble');
+  overlayBody.innerHTML = '';
+  overlayBody.appendChild(el('p', 'wc-help', 'Tap the tiles in the right order to spell the word.'));
+  var ans = el('div', 'wc-answer');
+  var slots = [];
+  for (var i = 0; i < c.word.length; i++) { var sl = el('span', 'wc-slot', '·'); ans.appendChild(sl); slots.push(sl); }
+  overlayBody.appendChild(ans);
+  var tray = el('div', 'wc-tray');
+  var tiles = [];
+  var scr = c.scrambled || scrambleLetters(c.word);
+  for (var t = 0; t < scr.length; t++) {
+    (function (ch) {
+      var b = el('button', 'wc-tile', ch.toUpperCase());
+      b.onclick = function () { tapTile(b, ch); };
+      tray.appendChild(b); tiles.push(b);
+    })(scr[t]);
+  }
+  overlayBody.appendChild(tray);
+  var placed = 0;
+  function live() { return WC && WC.curing === c && c.stage === 2 && !c.done; }
+  function tapTile(b, ch) {
+    if (!live() || b.disabled) return;
+    if (ch === c.word[placed]) {
+      b.disabled = true; b.classList.add('used');
+      slots[placed].textContent = ch.toUpperCase(); slots[placed].classList.add('ok');
+      placed++; SZ.SFX.click();
+      if (placed === c.word.length) {
+        c.timers.push(setTimeout(function () {
+          if (!live()) return;
+          c.stage = 3; renderStage3();
+        }, 650));
+      }
+    } else { wiggle(b); c.mistakes++; }
+  }
+  var btnRow = el('div', 'wc-btnrow');
+  var hear = el('button', 'wc-btn', '🔊 Hear the word');
+  hear.onclick = function () { SZ.SFX.click(); speak(c.word); };
+  var hint = el('button', 'wc-btn hint', '💡 Hint');
+  hint.onclick = function () {
+    if (!live() || placed >= c.word.length) return;
+    SZ.SFX.click(); c.hints++;
+    var need = c.word[placed];
+    for (var k = 0; k < tiles.length; k++) {
+      if (!tiles[k].disabled && tiles[k].textContent === need.toUpperCase()) { tapTile(tiles[k], need); break; }
+    }
+  };
+  btnRow.appendChild(hear); btnRow.appendChild(hint);
+  overlayBody.appendChild(btnRow);
+}
+
+/* ---- Stage 3: Fill the Gaps. 1-3 missing letters by word length; option
+   buttons hold the correct letters plus decoys. ---- */
+function renderStage3() {
+  var c = WC.curing; if (!c || !overlayBody) return;
+  setStageHead(c.word, 3, 'Fill the Gaps');
+  overlayBody.innerHTML = '';
+  overlayBody.appendChild(el('p', 'wc-help', 'Some letters are missing. Tap a gap, then tap the right letter.'));
+  var gaps = makeGapPlan(c.word);
+  var filled = {};
+  var selected = gaps[0];
+  var row = el('div', 'wc-bigword');
+  var gapBtns = {};
+  for (var i = 0; i < c.word.length; i++) {
+    (function (idx) {
+      if (gaps.indexOf(idx) === -1) {
+        row.appendChild(el('span', 'wc-big-letter static', c.word[idx].toUpperCase()));
+      } else {
+        var g = el('button', 'wc-gap', '_');
+        g.onclick = function () { if (!g.disabled) { selected = idx; refreshSel(); SZ.SFX.click(); } };
+        row.appendChild(g); gapBtns[idx] = g;
+      }
+    })(i);
+  }
+  function refreshSel() {
+    for (var k in gapBtns) gapBtns[k].classList.toggle('sel', Number(k) === selected);
+  }
+  refreshSel();
+  overlayBody.appendChild(row);
+  var tray = el('div', 'wc-tray');
+  var correct = gaps.map(function (gp) { return c.word[gp]; });
+  var opts = shuffleInPlace(correct.concat(pickDecoys(correct, 4)));
+  var optBtns = [];
+  for (var o = 0; o < opts.length; o++) {
+    (function (ch) {
+      var b = el('button', 'wc-tile', ch.toUpperCase());
+      b.onclick = function () { tapOpt(b, ch); };
+      tray.appendChild(b); optBtns.push(b);
+    })(opts[o]);
+  }
+  overlayBody.appendChild(tray);
+  function live() { return WC && WC.curing === c && c.stage === 3 && !c.done; }
+  function tapOpt(b, ch) {
+    if (!live() || b.disabled || selected === null || selected === undefined) return;
+    if (ch === c.word[selected]) {
+      b.disabled = true; b.classList.add('used');
+      filled[selected] = ch;
+      var gb = gapBtns[selected];
+      gb.textContent = ch.toUpperCase(); gb.classList.add('ok'); gb.disabled = true;
+      SZ.SFX.click();
+      var rest = gaps.filter(function (gp) { return !(gp in filled); });
+      if (rest.length === 0) {
+        c.timers.push(setTimeout(function () {
+          if (!live()) return;
+          c.stage = 4; renderStage4();
+        }, 650));
+      } else { selected = rest[0]; refreshSel(); }
+    } else { wiggle(b); wiggle(gapBtns[selected]); c.mistakes++; }
+  }
+  var btnRow = el('div', 'wc-btnrow');
+  var hear = el('button', 'wc-btn', '🔊 Hear the word');
+  hear.onclick = function () { SZ.SFX.click(); speak(c.word); };
+  var hint = el('button', 'wc-btn hint', '💡 Hint');
+  hint.onclick = function () {
+    if (!live()) return;
+    var rest = gaps.filter(function (gp) { return !(gp in filled); });
+    if (!rest.length) return;
+    SZ.SFX.click(); c.hints++;
+    var gp = rest[0], need = c.word[gp];
+    for (var k = 0; k < optBtns.length; k++) {
+      if (!optBtns[k].disabled && optBtns[k].textContent === need.toUpperCase()) {
+        selected = gp; refreshSel(); tapOpt(optBtns[k], need); break;
+      }
+    }
+  };
+  btnRow.appendChild(hear); btnRow.appendChild(hint);
+  overlayBody.appendChild(btnRow);
+}
+
+/* ---- Stage 4: Spell It Yourself. The word is SPOKEN aloud; the player
+   spells from memory via the on-screen QWERTY keyboard (touch) and/or the
+   physical keyboard (keydown). Correct letters lock in green; wrong
+   keystrokes shake gently and do not advance. ---- */
+function renderStage4() {
+  var c = WC.curing; if (!c || !overlayBody) return;
+  setStageHead(c.word, 4, 'Spell It Yourself');
+  overlayBody.innerHTML = '';
+  overlayBody.appendChild(el('p', 'wc-help', 'Listen… now spell the word from memory!'));
+  var ans = el('div', 'wc-answer');
+  var slots = [];
+  for (var i = 0; i < c.word.length; i++) { var sl = el('span', 'wc-slot', '·'); ans.appendChild(sl); slots.push(sl); }
+  overlayBody.appendChild(ans);
+  c.slots4 = slots; c.idx4 = 0;
+  var kb = el('div', 'wc-kb');
+  var rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
+  for (var r = 0; r < rows.length; r++) {
+    var rr = el('div', 'wc-kbrow');
+    for (var k = 0; k < rows[r].length; k++) {
+      (function (ch) {
+        var b = el('button', 'wc-key', ch.toUpperCase());
+        b.onclick = function () { typeLetter4(ch); };
+        rr.appendChild(b);
+      })(rows[r][k]);
+    }
+    kb.appendChild(rr);
+  }
+  overlayBody.appendChild(kb);
+  var btnRow = el('div', 'wc-btnrow');
+  var hear = el('button', 'wc-btn', '🔊 Hear the word');
+  hear.onclick = function () { SZ.SFX.click(); speak(c.word); };
+  var hint = el('button', 'wc-btn hint', '💡 Hint');
+  hint.onclick = function () { giveHint4(); };
+  btnRow.appendChild(hear); btnRow.appendChild(hint);
+  overlayBody.appendChild(btnRow);
+  speak(c.word); // spoken aloud at stage entry (entry came from a tap)
+}
+
+function typeLetter4(ch) {
+  var c = WC && WC.curing;
+  if (!c || c.stage !== 4 || c.done || c.idx4 >= c.word.length) return;
+  if (ch === c.word[c.idx4]) {
+    var sl = c.slots4[c.idx4];
+    sl.textContent = ch.toUpperCase(); sl.classList.add('ok');
+    c.idx4++; SZ.SFX.click();
+    if (c.idx4 === c.word.length) {
+      c.timers.push(setTimeout(function () { completeCure(); }, 700));
+    }
+  } else {
+    shake(c.slots4[c.idx4]);
+    c.mistakes++;
   }
 }
 
-function fourSpeciesBlast() {
-  var p = SZ.player();
-  if (!p || p.shofarCd > 0) return;
-  p.shofarCd = CFG.shofarCd; // same cooldown
-  SZ.SFX.shofar();
-  kit.shakeCamera(0.3); // same punch as the shofar blast
-  showFourSpecies(p); // the kid takes out the Four Species and waves them
-  p.rig.armL.rotation.x = -2.4; p.rig.armR.rotation.x = -2.4;
-  var fx = Math.sin(p.yaw), fz = Math.cos(p.yaw); // same cone: damage + knockback
-  var zombies = SZ.zombies();
-  for (var i = 0; i < zombies.length; i++) {
-    var zb = zombies[i];
-    if (zb.repented || zb.gone) continue;
-    var dx = zb.pos.x - p.pos.x, dz = zb.pos.z - p.pos.z;
-    var d = Math.hypot(dx, dz);
-    if (d > CFG.shofarRange) continue;
-    if ((dx * fx + dz * fz) / (d || 1) < 0.6) continue;
-    var away = Math.atan2(dx, dz);
-    SZ.damageZombie(zb, CFG.shofarDmg, away);
-    zb.pos.x = kit.clamp(zb.pos.x + Math.sin(away) * CFG.shofarKnock * 0.35, 2, W - 2);
-    zb.pos.z = kit.clamp(zb.pos.z + Math.cos(away) * CFG.shofarKnock * 0.35, 2, W - 2);
+function giveHint4() {
+  var c = WC && WC.curing;
+  if (!c || c.stage !== 4 || c.done || c.idx4 >= c.word.length) return;
+  SZ.SFX.click(); c.hints++;
+  typeLetter4(c.word[c.idx4]); // fills the correct next letter, counted as a hint
+}
+
+/* ---- All four stages complete: the happy cure ---- */
+function completeCure() {
+  var c = WC && WC.curing;
+  if (!c || c.done) return;
+  c.done = true;
+  var stars = awardStars(c.mistakes, c.hints); // 3 = flawless, 2 = minor help, 1 = heavy help
+  var e = null, i;
+  for (i = 0; i < WC.words.length; i++) if (WC.words[i].w === c.word) { e = WC.words[i]; break; }
+  if (e && stars > e.stars) e.stars = stars;
+  WC.sessionStars += stars;
+  if (WC.sessionStars > bestSessionStars) bestSessionStars = WC.sessionStars;
+  var zb = c.zb;
+  removeBubble(zb);
+  if (zb.wordCure) zb.wordCure.cured = true;
+  SZ.repentZombie(zb, true); // the happy repent transformation (celebration = true)
+  kit.spawnBurst(zb.pos.x, zb.pos.y + 2, zb.pos.z, 0x9dff57, 26, 3.2, 0.35, 1.3, 3.5);
+  confetti();
+  closeCure();
+  SZ.kit.banner('🎉 ' + c.word.toUpperCase() + ' cured! ' + starStr(stars), 3);
+  updateWbBtn();
+  if (wbPanel) refreshWordBook();
+  // spaced repetition: words below 3 stars stay in the queue (pickWordIndex
+  // skips 3-star words), so they reappear on later zombies automatically
+  var done = true;
+  for (i = 0; i < WC.words.length; i++) if (WC.words[i].stars < 3) { done = false; break; }
+  if (done) {
+    setTimeout(function () { if (active()) showDiploma(); }, 1700);
+  } else if (stars < 3) {
+    SZ.kit.toast('⭐ ' + starStr(stars) + ' — "' + c.word.toUpperCase() + '" will visit again for practice!', 4);
+  } else {
+    SZ.kit.toast('⭐⭐⭐ Mastered!', 3);
   }
-  H.updatePowerBar(); // through the wrapper: re-applies the Four Species label
 }
 
-function relabelFourSpecies() {
-  if (!sukkotOn || !SUK) return;
-  var el = document.querySelector('#ps_shofar .pn');
-  // the base updatePowerBar rewrites this label whenever its cache key
-  // changes (each cooldown second, language switch, ...), so re-apply the
-  // Four Species name whenever the DOM doesn't already show it
-  var want = '🍋 ' + (isHe() ? 'ארבעת המינים' : 'Four Species');
-  if (el && el.textContent !== want) el.textContent = want;
-}
-
-/* ---- 9. Game over: score = survival time, top 5 kept while open ---- */
-function fmtTime(t) {
-  var m = Math.floor(t / 60), s = Math.floor(t % 60);
-  return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
-}
-
-function sukkotGameOver() {
-  if (!active()) return H._patchGameOver();
-  SUK.over = true;
-  sukkotScores.push(SUK.t);
-  sukkotScores.sort(function (a, b) { return b - a; });
-  sukkotScores = sukkotScores.slice(0, 5);
-  H._patchGameOver();
-  var fell = SUK.endReason === 'sukkah';
-  document.getElementById('overTitle').textContent =
-    fell ? (isHe() ? 'הסוכה נפלה! 💔' : 'The sukkah fell! 💔')
-         : (isHe() ? 'המשחק נגמר!' : 'Game over!');
-  var medals = ['🥇', '🥈', '🥉', '4.', '5.'];
-  var rows = sukkotScores.map(function (t, i) {
-    return '<div>' + medals[i] + ' ' + fmtTime(t) + '</div>';
-  }).join('');
-  document.getElementById('overSub').innerHTML =
-    '<div style="font-size:22px;margin:6px 0">' +
-    (isHe() ? 'שרדתם' : 'You survived') + ': <b>' + fmtTime(SUK.t) + '</b></div>' +
-    '<div style="font-size:15px;opacity:0.9">' +
-    (isHe() ? 'התוצאות הטובות ביותר (כל עוד המשחק פתוח)' : 'Best scores (while the game is open)') +
-    '</div>' + rows;
-  var rb = document.getElementById('btnRetry');
-  rb.textContent = isHe() ? '🍋 שחקו שוב' : '🍋 Play again';
-  rb.onclick = function () { SZ.SFX.click(); startSukkot(); };
-  hideSukkotHud();
-}
-
-/* ---- 10. HUD: sukkah health bar + survival timer ---- */
-function showSukkotHud() {
-  document.getElementById('bossname').textContent = '🍋 ' + (isHe() ? 'הסוכה' : 'The Sukkah');
-  document.getElementById('bossbar').style.display = 'block';
-  updateSukkahHud();
-  if (!timerEl) {
-    timerEl = document.createElement('div');
-    timerEl.id = 'sukTimer';
-    timerEl.style.cssText = 'position:fixed;top:64px;left:50%;transform:translateX(-50%);' +
-      'color:#fff;font-size:22px;font-weight:800;text-shadow:0 2px 0 #000;z-index:40;' +
-      'background:rgba(0,0,0,0.45);border:2px solid #ffd54f;border-radius:10px;padding:2px 14px;';
-    document.body.appendChild(timerEl);
+function confetti() {
+  var colors = ['#f44336', '#ffeb3b', '#4caf50', '#2196f3', '#ff9800', '#e91e63', '#9c27b0'];
+  for (var i = 0; i < 70; i++) {
+    var d = document.createElement('div');
+    d.className = 'wc-confetti';
+    d.style.left = (Math.random() * 100) + 'vw';
+    d.style.background = colors[i % colors.length];
+    d.style.animationDuration = (1.6 + Math.random() * 1.6) + 's';
+    d.style.animationDelay = (Math.random() * 0.5) + 's';
+    if (Math.random() < 0.5) d.style.borderRadius = '50%';
+    document.body.appendChild(d);
+    (function (dd) {
+      setTimeout(function () { if (dd.parentNode) dd.parentNode.removeChild(dd); }, 3800);
+    })(d);
   }
-  timerEl.style.display = 'block';
-  updateSukkotTimer();
-}
-function updateSukkahHud() {
-  if (!SUK) return;
-  document.getElementById('bossfill').style.width =
-    Math.max(0, SUK.sukkahHp / SUK.sukkahMax * 100) + '%';
-}
-var lastTimerText = '';
-function updateSukkotTimer() {
-  if (!timerEl || !SUK) return;
-  var want = '⏱ ' + fmtTime(SUK.t);
-  if (want !== lastTimerText) { timerEl.textContent = want; lastTimerText = want; }
-}
-function hideSukkotHud() {
-  document.getElementById('bossbar').style.display = 'none';
-  if (timerEl) timerEl.style.display = 'none';
-}
-function refreshSukkotLabels() {
-  if (!sukkotOn || !SUK || SUK.over) return;
-  document.getElementById('bossname').textContent = '🍋 ' + (isHe() ? 'הסוכה' : 'The Sukkah');
-  relabelFourSpecies();
 }
 
-/* ---- 11. More bean bushes / flower patches (respawn comes free) ---- */
-function addExtraBushes() {
-  var bushes = SZ.getFartBushes(); // the live array: the game's own updater respawns these
-  var emoji = (SZ.player().kid === 'girl') ? '🌸' : '🌱';
-  for (var i = 0; i < 6; i++) {
-    var sp = kit.findFreePoint(12, 60, 1);
-    if (!sp) continue;
-    var m = kit.textMesh(emoji, 1.3, { size: 72 });
-    var y = kit.groundHeight(sp.x, sp.z);
-    m.position.set(sp.x, y + 1, sp.z);
-    kit.scene().add(m);
-    bushes.push({ mesh: m, x: sp.x, z: sp.z, y: y, bob: kit.rand(0, 9), respawnT: 0, taken: false });
+/* ==========================================================================
+   13. The Word Book: a DOM panel listing every loaded word with its stars,
+   the mastered count, and the best star total of this page visit.
+   ========================================================================== */
+var wbBtn = null, wbPanel = null;
+function buildWordBookButton() {
+  removeWordBook();
+  wbBtn = el('button', 'wc-wb-btn', '📚 Word Book');
+  wbBtn.onclick = function () { SZ.SFX.click(); toggleWordBook(); };
+  document.body.appendChild(wbBtn);
+  updateWbBtn();
+}
+function updateWbBtn() {
+  if (!wbBtn || !WC) return;
+  var m = 0, i;
+  for (i = 0; i < WC.words.length; i++) if (WC.words[i].stars >= 3) m++;
+  wbBtn.textContent = '📚 Word Book ' + m + '/' + WC.words.length + ' ★' + WC.sessionStars;
+}
+function toggleWordBook() {
+  if (wbPanel) { hideWordBook(); return; }
+  wbPanel = el('div', 'wc-wb-panel');
+  refreshWordBook();
+  document.body.appendChild(wbPanel);
+}
+function refreshWordBook() {
+  if (!wbPanel || !WC) return;
+  wbPanel.innerHTML = '';
+  var m = 0, i;
+  for (i = 0; i < WC.words.length; i++) if (WC.words[i].stars >= 3) m++;
+  wbPanel.appendChild(el('div', 'wc-wb-title', '📚 Word Book'));
+  wbPanel.appendChild(el('div', 'wc-wb-sub', 'Mastered: <b>' + m + ' / ' + WC.words.length + '</b>'));
+  wbPanel.appendChild(el('div', 'wc-wb-sub', 'Best stars this visit: <b>★' + bestSessionStars + '</b>'));
+  var list = el('div', 'wc-wb-list');
+  for (i = 0; i < WC.words.length; i++) {
+    var e = WC.words[i];
+    list.appendChild(el('div', 'wc-wb-row' + (e.stars >= 3 ? ' mastered' : ''),
+      '<span>' + e.w.toUpperCase() + '</span><span>' + starStr(e.stars) + '</span>'));
   }
+  wbPanel.appendChild(list);
+  var qb = el('button', 'wc-btn', '🏠 Quit to title');
+  qb.onclick = function () { SZ.SFX.click(); quitToTitle(); };
+  wbPanel.appendChild(qb);
+}
+function hideWordBook() {
+  if (wbPanel && wbPanel.parentNode) wbPanel.parentNode.removeChild(wbPanel);
+  wbPanel = null;
+}
+function removeWordBook() {
+  hideWordBook();
+  if (wbBtn && wbBtn.parentNode) wbBtn.parentNode.removeChild(wbBtn);
+  wbBtn = null;
+}
+
+/* ==========================================================================
+   14. The Word Doctor Diploma: every loaded word at 3 stars.
+   ========================================================================== */
+function showDiploma() {
+  if (!active()) return;
+  if (SZ.G) SZ.G.state = 'paused';
+  SZ.showScreen(null);
+  buildOverlay();
+  overlayHead.appendChild(el('div', 'wc-title', '🎓 Word Doctor Diploma'));
+  overlayBody.appendChild(el('div', 'wc-diploma', '🎓'));
+  overlayBody.appendChild(el('p', 'wc-help',
+    'Amazing, Doctor! You cured all <b>' + WC.words.length + '</b> words with 3 stars each. The whole neighborhood is healthy!'));
+  overlayBody.appendChild(el('p', 'wc-stars-big', '★★★ × ' + WC.words.length));
+  confetti(); confetti();
+  try { if (SZ.SFX.hashemLovesMe) SZ.SFX.hashemLovesMe(); } catch (e) {}
+  var row = el('div', 'wc-btnrow');
+  var again = el('button', 'wc-btn primary', '🔁 Play again');
+  again.onclick = function () {
+    SZ.SFX.click();
+    startWordCure(WC.words.map(function (e) { return e.w; }));
+  };
+  var home = el('button', 'wc-btn', '🏠 Title');
+  home.onclick = function () { SZ.SFX.click(); quitToTitle(); };
+  row.appendChild(again); row.appendChild(home);
+  overlayBody.appendChild(row);
+  speak('Congratulations, Word Doctor!');
 }
 
 })();
