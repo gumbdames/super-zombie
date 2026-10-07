@@ -1,9 +1,9 @@
-// SIG:ly4Q9MJcq5pDh9TbUDad8YiYEMCmX1ge+Kuuz6AUZt452hg5ZBacO2QiPn7dNlkPoEQbwVEiWB7YyOClsGWqWw==
+// SIG:Nj3+wB68VmdZORPl5pEcAp1XGs2qP7w055eURktMUlcmEpEedRNc+t9testwLeIL0Rs36xbD69r65azODoXA8Q==
 (function () {
 'use strict';
 /* ============================================================================
    Super Zombie — "Word Cure" spelling patch
-   Version 1.1.1
+   Version 1.1.2
    Copyright (C) 2026 Gumb Dames
    SPDX-License-Identifier: AGPL-3.0-only
 
@@ -36,7 +36,7 @@
    Mockable for tests: the loader suite overrides Date.now. */
 if (Date.now() >= Date.UTC(2026, 9, 17, 0, 0, 0)) return; // Oct 17 2026 00:00 UTC
 
-window.WORDCURE_PATCH_VERSION = '1.1.1'; // stamp (after the gate: expired => zero trace)
+window.WORDCURE_PATCH_VERSION = '1.1.2'; // stamp (after the gate: expired => zero trace)
 
 var SZ = window.SZ20;
 if (!SZ || !SZ.HOOKS || !SZ.kit || !SZ.spawnBird) return; // needs game v2.0.25+
@@ -173,7 +173,7 @@ function starStr(n) { var s = ''; for (var i = 0; i < 3; i++) s += i < n ? '★'
 Object.defineProperty(window, 'WORDCURE_TEST', {
   enumerable: false, configurable: true, writable: false,
   value: {
-    version: '1.1.1',
+    version: '1.1.2',
     parseWordList: parseWordList,
     scrambleLetters: scrambleLetters,
     awardStars: awardStars,
@@ -692,7 +692,7 @@ function makeBubbleSprite(scrambled) {
     g.lineWidth = 3; g.strokeStyle = '#5c6bc0'; g.stroke();
     g.fillStyle = '#1a237e';
     g.font = 'bold 38px Arial';
-    g.fillText(scrambled[i].toUpperCase(), x + tile / 2, 52 + (tile - 8) / 2 + 2);
+    g.fillText(scrambled[i], x + tile / 2, 52 + (tile - 8) / 2 + 2);
   }
   var tex = new THREE.CanvasTexture(cv);
   tex.minFilter = THREE.LinearFilter;
@@ -945,7 +945,7 @@ function setStageHead(word, stage, title) {
      A stuck player can still use the "Hear the word" button, replay the
      cure, or press the Hint button (each hint counts against the stars). */
   var headHtml = (stage === 1)
-    ? '📚 Cure: <b>' + word.toUpperCase() + '</b>'
+    ? '📚 Cure: <b>' + word + '</b>'
     : '📚 Cure the word!';
   overlayHead.appendChild(el('div', 'wc-title', headHtml));
   overlayHead.appendChild(el('div', 'wc-stage', 'Stage ' + stage + ' of 4: ' + title));
@@ -1016,7 +1016,7 @@ function renderStage1() {
   var row = el('div', 'wc-bigword');
   var spans = [];
   for (var i = 0; i < c.word.length; i++) {
-    var s = el('span', 'wc-big-letter', c.word[i].toUpperCase());
+    var s = el('span', 'wc-big-letter', c.word[i]);
     row.appendChild(s); spans.push(s);
   }
   overlayBody.appendChild(row);
@@ -1070,7 +1070,7 @@ function renderStage2() {
   var scr = c.scrambled || scrambleLetters(c.word);
   for (var t = 0; t < scr.length; t++) {
     (function (ch) {
-      var b = el('button', 'wc-tile', ch.toUpperCase());
+      var b = el('button', 'wc-tile', ch);
       b.onclick = function () { tapTile(b, ch); };
       tray.appendChild(b); tiles.push(b);
     })(scr[t]);
@@ -1082,7 +1082,7 @@ function renderStage2() {
     if (!live() || b.disabled) return;
     if (ch === c.word[placed]) {
       b.disabled = true; b.classList.add('used');
-      slots[placed].textContent = ch.toUpperCase(); slots[placed].classList.add('ok');
+      slots[placed].textContent = ch; slots[placed].classList.add('ok');
       placed++; SZ.SFX.click();
       if (placed === c.word.length) {
         c.timers.push(setTimeout(function () {
@@ -1101,7 +1101,7 @@ function renderStage2() {
     SZ.SFX.click(); c.hints++;
     var need = c.word[placed];
     for (var k = 0; k < tiles.length; k++) {
-      if (!tiles[k].disabled && tiles[k].textContent === need.toUpperCase()) { tapTile(tiles[k], need); break; }
+      if (!tiles[k].disabled && tiles[k].textContent === need) { tapTile(tiles[k], need); break; }
     }
   };
   btnRow.appendChild(hear); btnRow.appendChild(hint);
@@ -1123,7 +1123,7 @@ function renderStage3() {
   for (var i = 0; i < c.word.length; i++) {
     (function (idx) {
       if (gaps.indexOf(idx) === -1) {
-        row.appendChild(el('span', 'wc-big-letter static', c.word[idx].toUpperCase()));
+        row.appendChild(el('span', 'wc-big-letter static', c.word[idx]));
       } else {
         var g = el('button', 'wc-gap', '_');
         g.onclick = function () { if (!g.disabled) { selected = idx; refreshSel(); SZ.SFX.click(); } };
@@ -1142,7 +1142,7 @@ function renderStage3() {
   var optBtns = [];
   for (var o = 0; o < opts.length; o++) {
     (function (ch) {
-      var b = el('button', 'wc-tile', ch.toUpperCase());
+      var b = el('button', 'wc-tile', ch);
       b.onclick = function () { tapOpt(b, ch); };
       tray.appendChild(b); optBtns.push(b);
     })(opts[o]);
@@ -1155,7 +1155,7 @@ function renderStage3() {
       b.disabled = true; b.classList.add('used');
       filled[selected] = ch;
       var gb = gapBtns[selected];
-      gb.textContent = ch.toUpperCase(); gb.classList.add('ok'); gb.disabled = true;
+      gb.textContent = ch; gb.classList.add('ok'); gb.disabled = true;
       SZ.SFX.click();
       var rest = gaps.filter(function (gp) { return !(gp in filled); });
       if (rest.length === 0) {
@@ -1177,7 +1177,7 @@ function renderStage3() {
     SZ.SFX.click(); c.hints++;
     var gp = rest[0], need = c.word[gp];
     for (var k = 0; k < optBtns.length; k++) {
-      if (!optBtns[k].disabled && optBtns[k].textContent === need.toUpperCase()) {
+      if (!optBtns[k].disabled && optBtns[k].textContent === need) {
         selected = gp; refreshSel(); tapOpt(optBtns[k], need); break;
       }
     }
@@ -1210,7 +1210,7 @@ function renderStage4() {
     var rr = el('div', 'wc-kbrow');
     for (var k = 0; k < rows[r].length; k++) {
       (function (ch) {
-        var b = el('button', 'wc-key', ch.toUpperCase());
+        var b = el('button', 'wc-key', ch);
         b.onclick = function () { typeLetter4(ch); };
         rr.appendChild(b);
       })(rows[r][k]);
@@ -1233,7 +1233,7 @@ function typeLetter4(ch) {
   if (!c || c.stage !== 4 || c.done || c.idx4 >= c.word.length) return;
   if (ch === c.word[c.idx4]) {
     var sl = c.slots4[c.idx4];
-    sl.textContent = ch.toUpperCase(); sl.classList.add('ok');
+    sl.textContent = ch; sl.classList.add('ok');
     c.idx4++; SZ.SFX.click();
     if (c.idx4 === c.word.length) {
       c.timers.push(setTimeout(function () { completeCure(); }, 700));
@@ -1270,7 +1270,7 @@ function completeCure() {
   kit.spawnBurst(zb.pos.x, zb.pos.y + 2, zb.pos.z, 0x9dff57, 26, 3.2, 0.35, 1.3, 3.5);
   confetti();
   closeCure();
-  SZ.kit.banner('🎉 ' + c.word.toUpperCase() + ' cured! ' + starStr(stars), 3);
+  SZ.kit.banner('🎉 ' + c.word + ' cured! ' + starStr(stars), 3);
   updateWbBtn();
   if (wbPanel) refreshWordBook();
   // spaced repetition: words below 3 stars stay in the queue (pickWordIndex
@@ -1287,7 +1287,7 @@ function completeCure() {
       setTimeout(function () { if (active()) showMasterDiploma(); }, 1700);
     }
   } else if (stars < 3) {
-    SZ.kit.toast('⭐ ' + starStr(stars) + ' — "' + c.word.toUpperCase() + '" will visit again for practice!', 4);
+    SZ.kit.toast('⭐ ' + starStr(stars) + ' — "' + c.word + '" will visit again for practice!', 4);
   } else {
     SZ.kit.toast('⭐⭐⭐ Mastered!', 3);
   }
@@ -1365,7 +1365,7 @@ function refreshWordBook() {
   for (i = 0; i < WC.words.length; i++) {
     var e = WC.words[i];
     list.appendChild(el('div', 'wc-wb-row' + (e[sk] >= 3 ? ' mastered' : ''),
-      '<span>' + e.w.toUpperCase() + '</span><span>' + starStr(e[sk]) + '</span>'));
+      '<span>' + e.w + '</span><span>' + starStr(e[sk]) + '</span>'));
   }
   wbPanel.appendChild(list);
   var qb = el('button', 'wc-btn', '🏠 Quit to title');
